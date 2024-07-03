@@ -37,3 +37,45 @@ To run INF Diner on your local machine, follow these steps:
 
    ```bash
    git clone https://github.com/minguell/inf-diner.git
+2.**Navigate to the project directory:**
+
+
+   cd inf-diner
+
+3. **Compile the project:**
+
+   javac -d bin src/**/*.java
+
+4. **Run the game:**
+
+   java -cp bin Main
+
+## Usage
+Once the game is running, use your mouse to interact with the game elements. Serve the customers efficiently to earn tips and progress through the levels. Enjoy the unique university-themed elements and have fun!
+
+## Contributing
+We welcome contributions from the community. If you would like to contribute to the project, please follow these steps:
+
+Fork the repository.
+Create a new branch for your feature or bug fix.
+Make your changes and commit them with descriptive messages.
+Push your changes to your forked repository.
+Create a pull request to merge your changes into the main repository.
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for more details.
+
+## Contact
+If you have any questions or suggestions, please feel free to contact us:
+
+Thank you for checking out our project! We hope you enjoy playing INF Diner as much as we enjoyed creating it.
+
+
+
+
+
+
+
+
+
+   
