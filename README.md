@@ -37,19 +37,19 @@ To run INF Diner on your local machine, follow these steps:
 
    ```bash
    git clone https://github.com/minguell/inf-diner.git
-2.**Navigate to the project directory:**
+2. **Navigate to the project directory:**
 
-
+   ```bash
    cd inf-diner
-
+   ````
 3. **Compile the project:**
-
+   ```bash
    javac -d bin src/**/*.java
-
+   ```
 4. **Run the game:**
-
+   ```bash
    java -cp bin Main
-
+   ```
 ## Usage
 Once the game is running, use your mouse to interact with the game elements. Serve the customers efficiently to earn tips and progress through the levels. Enjoy the unique university-themed elements and have fun!
 
