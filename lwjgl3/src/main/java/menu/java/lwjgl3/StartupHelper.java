@@ -73,7 +73,7 @@ public class StartupHelper {
 // By default, LWJGL3 extracts to the directory specified by "java.io.tmpdir", which is usually the user's home.
 // If the user's name has non-ASCII (or some non-alphanumeric) characters in it, that would fail.
 // By extracting to the relevant "ProgramData" folder, which is usually "C:\ProgramData", we avoid this.
-                System.setProperty("java.io.tmpdir", System.getenv("ProgramData") + "/libGDX-temp");
+                System.setProperty("java.io.tmpdir", System.getenv("ProgramData") + "/libgdx.png-temp");
             }
             return false;
         }
