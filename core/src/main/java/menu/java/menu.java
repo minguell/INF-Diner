@@ -12,13 +12,20 @@ import com.badlogic.gdx.utils.ScreenUtils;
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class menu extends ApplicationAdapter {
     private SpriteBatch batch;
-    private Texture image;
-    private int opcao = 0;
+    private Texture menuPrincipal;
+    private Texture botaoPlay;
+    private Texture botaoSettings;
+    private Texture botaoExit;
+    private int opcao;
 
     @Override
     public void create() {
-        batch = new SpriteBatch();
-        image = new Texture("logo.png");
+        this.batch = new SpriteBatch();
+        this.menuPrincipal = new Texture("Logo.png");
+        this.botaoPlay = new Texture("BotaoPlay.png");
+        this.botaoSettings = new Texture("BotaoSettings.png");
+        this.botaoExit = new Texture("BotaoExit.png");
+        this.opcao = 0;
     }
 
     @Override
@@ -26,14 +33,20 @@ public class menu extends ApplicationAdapter {
         this.tratadorDeEntradas();
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         batch.begin();
-        batch.draw(image, 0, 0);
+        batch.draw(menuPrincipal, 0, 0);
+        batch.draw(this.botaoPlay, 1000, 25);
+        batch.draw(this.botaoSettings, 1325, 25);
+        batch.draw(this.botaoExit, 1650, 25);
         batch.end();
     }
 
     @Override
     public void dispose() {
-        batch.dispose();
-        image.dispose();
+        this.batch.dispose();
+        this.menuPrincipal.dispose();
+        this.botaoPlay.dispose();
+        this.botaoSettings.dispose();
+        this.botaoExit.dispose();
     }
 
     //Permite mudar o botao selecionado no menu principal com as setas ou WS
