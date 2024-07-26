@@ -1,8 +1,8 @@
-package menu.java.lwjgl3;
+package INF_Diner.java.lwjgl3;
 
+import INF_Diner.java.INF_Diner;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import menu.java.menu;
 
 /** Launches the desktop (LWJGL3) application. */
 public class Lwjgl3Launcher {
@@ -12,7 +12,7 @@ public class Lwjgl3Launcher {
     }
 
     private static Lwjgl3Application createApplication() {
-        return new Lwjgl3Application(new menu(), getDefaultConfiguration());
+        return new Lwjgl3Application(new INF_Diner(), getDefaultConfiguration());
     }
 
     private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {

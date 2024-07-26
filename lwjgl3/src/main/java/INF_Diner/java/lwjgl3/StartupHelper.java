@@ -14,7 +14,7 @@
  */
 //Note, the above license and copyright applies to this file only.
 
-package menu.java.lwjgl3;
+package INF_Diner.java.lwjgl3;
 
 import org.lwjgl.system.macosx.LibC;
 
