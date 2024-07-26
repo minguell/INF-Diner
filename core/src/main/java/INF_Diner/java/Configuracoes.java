@@ -9,11 +9,16 @@ import com.badlogic.gdx.utils.ScreenUtils;
 //Configuracoes herda de TelaOpcoes, uma classe abstrata que possui algumas funcionalidades de telas de opcoes genericas
 public class Configuracoes extends TelaOpcoes {
     private boolean mostrarConfiguracoes;
-
+    private int dificuldadeAtual;
+    private final Texture[] dificuldades = new Texture[3];
     //Construtor
     public Configuracoes(AudioTelas audioTelas){
         this.fundoTela = new Texture("Configuracoes.png");
         this.audioTelas = audioTelas;
+        this.dificuldadeAtual = 0;
+        this.dificuldades[0] = new Texture("Facil.png");
+        this.dificuldades[1] = new Texture("Medio.png");
+        this.dificuldades[2] = new Texture("Brutal.png");
         this.mostrarConfiguracoes = false;
     }
 
@@ -38,6 +43,7 @@ public class Configuracoes extends TelaOpcoes {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         this.batch.begin();
         this.batch.draw(this.fundoTela, 0, 0);
+        this.batch.draw(this.dificuldades[dificuldadeAtual], 840, 800);
         this.batch.end();
         this.tratadorDeEntradas();
 
