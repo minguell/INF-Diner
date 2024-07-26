@@ -1,0 +1,10 @@
+BotaoExit - Copia.png
+BotaoExit.png
+BotaoPlay.png
+BotaoSettings.png
+ErroMenu.mp3
+Logo.png
+MudarBotao.mp3
+MusicaMenu.mp3
+SelecaoMenu.mp3
+setaOpcaoAtual.png
