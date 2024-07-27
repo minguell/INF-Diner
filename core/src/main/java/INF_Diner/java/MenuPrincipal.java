@@ -12,6 +12,7 @@ public class MenuPrincipal extends TelaOpcoes {
     private final Texture botaoSettings;
     private final Texture botaoExit;
     private final Configuracoes config;
+    private final Cozinha cozinha;
     private final int ALTURA_SETA = 300;
     private final int X_BOTOES = 1000; //X referente a posicao do mais a esquerda dos botoes
     private final int Y_BOTOES = 25;
@@ -25,6 +26,7 @@ public class MenuPrincipal extends TelaOpcoes {
         this.botaoExit = new Texture("BotaoExit.png");
         this.audioTelas = new AudioTelas();
         this.config = new Configuracoes(audioTelas);
+        this.cozinha = new Cozinha();
     }
 
     //Constante representando o numero de opcoes de botoes do menu
@@ -38,7 +40,10 @@ public class MenuPrincipal extends TelaOpcoes {
         if(this.config.getMostrarConfiguracoes()){
             this.config.render();
         }
-        else{
+        else if (this.cozinha.getMostrarCozinha()){
+            this.cozinha.render();
+        }
+        else {
             this.render();
         }
     }
@@ -101,7 +106,7 @@ public class MenuPrincipal extends TelaOpcoes {
 
     //Prepara o gameplay
     public void iniciaJogo(){
-
+        this.cozinha.setMostrarCozinha(true);
     }
 
     //Fecha o programa
