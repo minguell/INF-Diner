@@ -5,14 +5,11 @@ import java.util.Random;
 
 public class Professor extends Cliente{
     private final int TOTAL_PROFESSORES = 1; //Numero de skins de professor disponiveis
+    private final int TEMPO_ESPERA = 30;
 
-    Professor(double tempoDeJogo){
-        this.tempoChegada = tempoDeJogo;
-        this.pedido = randomizaPedido();
-        this.skin = geraSkin();
-        Cliente.contagem++;
-        this.posX = 0;
-        this.posY = 0;
+    Professor(double tempoDeJogo) {
+        super(tempoDeJogo);
+        this.tempoEspera = TEMPO_ESPERA;
     }
 
     //AINDA FALTA IMPLEMENTAR A CONSIDERACAO DO TEMPO DE JOGO

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import java.util.Random;
 
 public abstract class Cliente {
-    protected double tempoEspera = 30; //MUDAR, VALOR ALEATORIO
+    protected double tempoEspera; //MUDAR, VALOR ALEATORIO
     protected double tempoChegada;
     protected Receita pedido;
     protected Texture skin;
@@ -13,7 +13,14 @@ public abstract class Cliente {
     protected int posY;
     private final int TOTAL_RECEITAS = 1;
 
-
+    Cliente(double tempoDeJogo){
+        this.tempoChegada = tempoDeJogo;
+        this.pedido = randomizaPedido();
+        this.skin = geraSkin();
+        Cliente.contagem++;
+        this.posX = 0;
+        this.posY = 0;
+    }
     //Getter e Setter de TempoEspera
     public void setTempoEspera(int tempoEspera) {
         this.tempoEspera = tempoEspera;
