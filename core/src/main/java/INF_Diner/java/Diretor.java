@@ -19,6 +19,7 @@ public class Diretor extends Cliente{
         this.banquete = new ArrayList<>();
         this.banquete.add(randomizaPedido());
         this.banquete.add(randomizaPedido());
+        this.setTempoEspera(TEMPO_ESPERA);
     }
 
     //Getter e Setter de Gorjeta
@@ -41,7 +42,7 @@ public class Diretor extends Cliente{
     //AINDA FALTA IMPLEMENTAR A CONSIDERACAO DO TEMPO DE JOGO
     @Override
     public int pagaPedido(double tempoDeJogo){
-        return (this.pedido.ingredientes.size() * 2) + (this.banquete.get(0).ingredientes.size() * 2) + (this.banquete.get(0).ingredientes.size() * 2) + this.gorjeta;
+        return (this.getPedido().ingredientes.size() * 2) + (this.banquete.get(0).ingredientes.size() * 2) + (this.banquete.get(0).ingredientes.size() * 2) + this.gorjeta;
     }
 
     //IMPLEMENTAR

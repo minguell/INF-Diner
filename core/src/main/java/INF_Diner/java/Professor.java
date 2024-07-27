@@ -9,13 +9,13 @@ public class Professor extends Cliente{
 
     Professor(double tempoDeJogo) {
         super(tempoDeJogo);
-        this.tempoEspera = TEMPO_ESPERA;
+        this.setTempoEspera(TEMPO_ESPERA);
     }
 
     //AINDA FALTA IMPLEMENTAR A CONSIDERACAO DO TEMPO DE JOGO
     @Override
     public int pagaPedido(double tempoDeJogo){
-        return (this.pedido.ingredientes.size() * 2);
+        return (this.getPedido().ingredientes.size() * 2);
     }
 
     //IMPLEMENTAR

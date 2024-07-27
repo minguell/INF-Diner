@@ -4,14 +4,14 @@ import com.badlogic.gdx.graphics.Texture;
 import java.util.Random;
 
 public abstract class Cliente {
-    protected double tempoEspera; //MUDAR, VALOR ALEATORIO
-    protected double tempoChegada;
-    protected Receita pedido;
-    protected Texture skin;
+    private double tempoEspera;
+    private double tempoChegada;
+    private Receita pedido;
+    private Texture skin;
     public static int contagem;
-    protected int posX;
-    protected int posY;
-    private final int TOTAL_RECEITAS = 1;
+    private int posX;
+    private int posY;
+    private final int TOTAL_RECEITAS_VALIDAS = 1;
 
     Cliente(double tempoDeJogo){
         this.tempoChegada = tempoDeJogo;
@@ -37,10 +37,42 @@ public abstract class Cliente {
         this.pedido = pedido;
     }
 
+    //Getter e Setter de TempoChegada
+    public double getTempoChegada() {
+        return tempoChegada;
+    }
+    public void setTempoChegada(double tempoChegada) {
+        this.tempoChegada = tempoChegada;
+    }
+
+    //Getter e Setter de PosX
+    public int getPosX() {
+        return posX;
+    }
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+
+    //Getter e Setter de PosY
+    public int getPosY() {
+        return posY;
+    }
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
+
+    //Getter e Setter de Skin
+    public Texture getSkin() {
+        return skin;
+    }
+    public void setSkin(Texture skin) {
+        this.skin = skin;
+    }
+
     //Retorna uma receita aleatoria que pode ser usada como pedido do cliente
     public Receita randomizaPedido() {
         Random rand = new Random();
-        return new Receita(rand.nextInt(TOTAL_RECEITAS));
+        return new Receita(rand.nextInt(TOTAL_RECEITAS_VALIDAS));
     }
 
     //Cliente deve pagar o pedido baseado na demora do jogador e no tipo de cliente

@@ -15,7 +15,7 @@ public class ProfessorRico extends Cliente{
         Random rand = new Random();
         this.gorjeta = rand.nextInt(MAX_GORJETA);
         segundoPedido = randomizaPedido();
-        this.tempoEspera = TEMPO_ESPERA;
+        this.setTempoEspera(TEMPO_ESPERA);
     }
 
     //Getter e Setter de Gorjeta
@@ -38,7 +38,7 @@ public class ProfessorRico extends Cliente{
     //AINDA FALTA IMPLEMENTAR A CONSIDERACAO DO TEMPO DE JOGO
     @Override
     public int pagaPedido(double tempoDeJogo){
-        return (this.pedido.ingredientes.size() * 2) + (this.segundoPedido.ingredientes.size() * 2) + this.gorjeta;
+        return (this.getPedido().ingredientes.size() * 2) + (this.segundoPedido.ingredientes.size() * 2) + this.gorjeta;
     }
 
     //IMPLEMENTAR
