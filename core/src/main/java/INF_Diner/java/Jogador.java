@@ -15,18 +15,20 @@ public class Jogador {
     private int posX;
     private int posY;
     private final int VELOCIDADE = 10;
-    private final int MIN_X = 0;
+    private final int MIN_X = 240;
     private final int MIN_Y = 0;
-    private final int MAX_X = 1680;
-    private final int MAX_Y = 900;
+    private final int MAX_X = 1440;
+    private final int MAX_Y = 720;
+    private final int X_INICIAL = 870;
+    private final int Y_INICIAL = 720;
 
     public Jogador() {
         this.dinheiro = 0;
         this.skin = new Sprite(new Texture("Jogador.png"));
         this.receitaCarregada = null;
         this.ingredienteCarregado = null;
-        this.posX = 0;
-        this.posY = 0;
+        this.posX = X_INICIAL;
+        this.posY = Y_INICIAL;
         this.viradoEsquerda = true;
     }
 

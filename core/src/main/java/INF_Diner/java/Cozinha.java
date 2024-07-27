@@ -31,12 +31,12 @@ public class Cozinha {
     private final int escalay = 1080 / 6;
 
     private final int[][] mapa = {
-            { 0, 0, 0, 5, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 4 },
-            { 0, 0, 3, 3, 3, 3, 0, 0 },
             { 1, 0, 0, 0, 0, 0, 0, 1 },
             { 1, 0, 0, 0, 0, 0, 0, 1 },
-            { 1, 1, 1, 2, 2, 1, 1, 1 }
+            { 1, 0, 3, 3, 3, 3, 0, 1 },
+            { 1, 0, 0, 0, 0, 0, 0, 1 },
+            { 1, 0, 0, 0, 0, 0, 0, 1 },
+            {5, 5, 4, 2, 2, 4, 5, 5 }
     };
 
     public Cozinha() {
@@ -85,7 +85,10 @@ public class Cozinha {
                     this.batch.draw(armario, j * escalax, i * escalay, escalax, escalay);
                     this.batch.draw(prato, j * escalax, i * escalay, escalax, escalay);
                 } else if (mapa[i][j] == 4) {
+                    this.batch.draw(armario, j * escalax, i * escalay, escalax, escalay);
                     this.batch.draw(lixeira, j * escalax, i * escalay, escalax, escalay);
+                } else if (mapa[i][j] == 5){
+                    this.batch.draw(armario, j * escalax, i * escalay, escalax, escalay);
                 }
             }
         }

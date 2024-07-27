@@ -107,6 +107,7 @@ public class MenuPrincipal extends TelaOpcoes {
     //Prepara o gameplay
     public void iniciaJogo(){
         this.cozinha.setMostrarCozinha(true);
+        this.audioTelas.pararMusica();
     }
 
     //Fecha o programa

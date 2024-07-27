@@ -44,6 +44,10 @@ public class AudioTelas {
         this.musica.play();
     }
 
+    //Para a musica
+    public void pararMusica(){
+        this.musica.stop();
+    }
     //Efeito sonoro a ser usado na hora das trocas de opcao
     public void efeitoMudarBotao(){
         this.mudarBotao.play(this.volume);
