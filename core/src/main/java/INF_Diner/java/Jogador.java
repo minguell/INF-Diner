@@ -3,27 +3,31 @@ package INF_Diner.java;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Jogador {
     private int dinheiro;
-    private final Texture skin;
+    private final Sprite skin;
     private Receita receitaCarregada;
     private Ingrediente ingredienteCarregado;
+    private boolean viradoEsquerda; //1 esquerda -1 direita
     private int posX;
     private int posY;
-    private final int VELOCIDADE = 2;
+    private final int VELOCIDADE = 10;
     private final int MIN_X = 0;
     private final int MIN_Y = 0;
-    private final int MAX_X = 1920;
-    private final int MAX_Y = 1080;
+    private final int MAX_X = 1680;
+    private final int MAX_Y = 900;
 
     public Jogador() {
         this.dinheiro = 0;
-        this.skin = new Texture("Jogador.png");
+        this.skin = new Sprite(new Texture("Jogador.png"));
         this.receitaCarregada = null;
         this.ingredienteCarregado = null;
         this.posX = 0;
         this.posY = 0;
+        this.viradoEsquerda = true;
     }
 
     //Getter e Setter de Dinheiro
@@ -66,11 +70,6 @@ public class Jogador {
         this.posY = posY;
     }
 
-    //Rotina de encerramento
-    public void dispose(){
-        skin.dispose();
-    }
-
     //Incrementa dinheiro de jogador (que serve como pontuacao)
     public void recebeDinheiro(int valor){
         this.dinheiro += valor;
@@ -84,17 +83,25 @@ public class Jogador {
 
     //Vai mover o jogador no sentido de dada input
     public void movimentar(){
-        if(this.posY > MIN_Y && (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyJustPressed(Input.Keys.UP))){
+        if(this.posY > MIN_Y && (Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN))){
             this.posY -= VELOCIDADE;
         }
-        if(this.posY < MAX_Y && (Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyJustPressed(Input.Keys.DOWN))){
+        if(this.posY < MAX_Y && (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP))){
             this.posY += VELOCIDADE;
         }
-        if(this.posX > MIN_X && (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyJustPressed(Input.Keys.LEFT))){
+        if(this.posX > MIN_X && (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT))){
             this.posX -= VELOCIDADE;
+            if(!this.viradoEsquerda){
+                this.skin.flip(true, false);
+                this.viradoEsquerda = true;
+            }
         }
-        if(this.posX < MAX_X && (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT))){
+        if(this.posX < MAX_X && (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT))){
             this.posX += VELOCIDADE;
+            if(this.viradoEsquerda){
+                this.skin.flip(true, false);
+                this.viradoEsquerda = false;
+            }
         }
     }
 
@@ -110,6 +117,10 @@ public class Jogador {
         if(this.ingredienteCarregado == null){
             this.ingredienteCarregado = ingrediente;
         }
+    }
+
+    public void render(SpriteBatch batch){
+        batch.draw(this.skin, this.posX, this.posY);
     }
 
 }

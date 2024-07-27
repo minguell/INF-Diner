@@ -1,4 +1,5 @@
 alface.png
+armario.png
 arroz.png
 AumentarVolume.png
 bife.png
@@ -8,11 +9,15 @@ BotaoPlay.png
 BotaoSettings.png
 Brutal.png
 caixa.png
+chao.png
 Configuracoes.png
 DiminuirVolume.png
 ErroMenu.mp3
 Facil.png
 feijao.png
+fogao.png
+Jogador.png
+lixeira.png
 macarrao.png
 Medio.png
 MenuPrincipal.png
@@ -23,6 +28,8 @@ ovo.png
 panela.png
 peixe.png
 placeholder.png
+porta.png
+prato.png
 pão.png
 queijo.png
 SelecaoMenu.mp3

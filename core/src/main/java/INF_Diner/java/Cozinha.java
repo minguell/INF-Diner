@@ -1,6 +1,9 @@
 package INF_Diner.java;
 
-import com.badlogic.gdx.Gdx;
+import
+
+
+    com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -10,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Cozinha {
 
     private boolean mostrarCozinha;
-    private SpriteBatch batch = new SpriteBatch();
+    private final SpriteBatch batch = new SpriteBatch();
     private final Texture panela = new Texture("panela.png");
     private final Texture caixa = new Texture("caixa.png");
     private final Texture chao = new Texture("chao.png");
@@ -18,7 +21,8 @@ public class Cozinha {
     private final Texture prato = new Texture("prato.png");
     private final Texture lixeira = new Texture("lixeira.png");
     private final Texture fogao = new Texture("fogao.png");
-    private ArrayList<Ingrediente> caixas = new ArrayList<Ingrediente>();
+    private final  ArrayList<Ingrediente> caixas = new ArrayList<Ingrediente>();
+    private final Jogador jogador = new Jogador();
     private int ingredienteIndex = 0;
     private final int deslocax = -60;
     private final int deslocay = -50;
@@ -66,7 +70,7 @@ public class Cozinha {
                 this.batch.draw(chao, j * escalax, i * escalay, escalax, escalay);
                 if (mapa[i][j] == 2) {
                     this.batch.draw(armario, j * escalax, i * escalay, escalax, escalay);
-                    this.batch.draw(fogao, j * escalax + deslocax, i * escalay + deslocay, escalax * escala2, escalay * escala2); 
+                    this.batch.draw(fogao, j * escalax + deslocax, i * escalay + deslocay, escalax * escala2, escalay * escala2);
                     this.batch.draw(panela, j * escalax, i * escalay, escalax, escalay);
                 } // se for 1, desenha uma caixa
                 else if (mapa[i][j] == 1) {
@@ -88,7 +92,24 @@ public class Cozinha {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             this.mostrarCozinha = false;
         }
+        this.jogador.movimentar();
+        this.jogador.render(batch);
         this.batch.end();
+
+    }
+
+    public void dispose(){
+        this.batch.dispose();
+        this.armario.dispose();
+        this.panela.dispose();
+        this.caixa.dispose();
+        this.chao.dispose();
+        this.prato.dispose();
+        this.lixeira.dispose();
+        this.fogao.dispose();
+        for (int i = 0; i < 10; i++) {
+            this.caixas.get(i).dispose();
+        }
 
     }
 }

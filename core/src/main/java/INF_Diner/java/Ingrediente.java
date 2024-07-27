@@ -43,9 +43,13 @@ public class Ingrediente {
     public void setTipoIngrediente(int tipoIngrediente) {
         this.tipoIngrediente = tipoIngrediente;
     }
-    
+
     public void setTextura(Texture textura) {
         this.textura = textura;
     }
-    
+
+    public void dispose(){
+        this.textura.dispose();
+    }
+
 }
