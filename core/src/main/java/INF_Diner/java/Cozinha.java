@@ -11,20 +11,29 @@ public class Cozinha {
 
     private boolean mostrarCozinha;
     private SpriteBatch batch = new SpriteBatch();
-    private final Texture panela1 = new Texture("panela.png");
-    private final Texture panela2 = new Texture("panela.png");
-    private final Texture caixa = new Texture("caixa.png"); //para aplicar ainda
+    private final Texture panela = new Texture("panela.png");
+    private final Texture caixa = new Texture("caixa.png");
+    private final Texture chao = new Texture("chao.png");
+    private final Texture armario = new Texture("armario.png");
+    private final Texture prato = new Texture("prato.png");
+    private final Texture lixeira = new Texture("lixeira.png");
+    private final Texture fogao = new Texture("fogao.png");
     private ArrayList<Ingrediente> caixas = new ArrayList<Ingrediente>();
-
-    // como declaro uma matriz de mapa da cozinha?
+    private int ingredienteIndex = 0;
+    private final int deslocax = -60;
+    private final int deslocay = -50;
+    private final float escala2 = 1.5f;
+    private final int escalax = 1920 / 8;
+    private final int escalay = 1080 / 6;
 
     private final int[][] mapa = {
-            { 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 5, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 4 },
+            { 0, 0, 3, 3, 3, 3, 0, 0 },
             { 1, 0, 0, 0, 0, 0, 0, 1 },
             { 1, 0, 0, 0, 0, 0, 0, 1 },
             { 1, 1, 1, 2, 2, 1, 1, 1 }
-    }; //no fim nao sei se vou usar isso
+    };
 
     public Cozinha() {
         caixas.add(new Ingrediente("Bife", true, 1, new Texture("bife.png")));
@@ -50,21 +59,32 @@ public class Cozinha {
 
     public void render() {
         // renderiza a cozinha
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
+        ScreenUtils.clear(1f, 1f, 1f, 1f);
         this.batch.begin();
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 8; j++) {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 8; j++) { // se o mapa[i][j] for 2, desenha uma panela
+                this.batch.draw(chao, j * escalax, i * escalay, escalax, escalay);
                 if (mapa[i][j] == 2) {
-                    this.batch.draw(panela1, 2, 2);
-                    this.batch.draw(panela2, 400, 2);
-                }// else if (mapa[i][j] == 1) {
-                //    for (int k = 0; k < caixas.size(); k++) {
-                          //  this.batch.draw(caixas.get(k).getTextura(), 2, 2);
-                        
-            //        }
-                //}  FALTA AQUI AINDA (PROVAVELMENTE VOU TER QUE USAR FORÇA BRUTA E FAZER UM INGREDIENTE DE CADA VEZ)
-            }}
-            
+                    this.batch.draw(armario, j * escalax, i * escalay, escalax, escalay);
+                    this.batch.draw(fogao, j * escalax + deslocax, i * escalay + deslocay, escalax * escala2, escalay * escala2); 
+                    this.batch.draw(panela, j * escalax, i * escalay, escalax, escalay);
+                } // se for 1, desenha uma caixa
+                else if (mapa[i][j] == 1) {
+                    this.batch.draw(armario, j * escalax, i * escalay, escalax, escalay);
+                    this.batch.draw(caixa, j * escalax, i * escalay, escalax, escalay);
+                    this.batch.draw(caixas.get(ingredienteIndex).getTextura(), j * escalax, i * escalay, escalax,escalay);
+                    ingredienteIndex++;
+                    if (ingredienteIndex == caixas.size()) {
+                        ingredienteIndex = 0;
+                    }
+                } else if (mapa[i][j] == 3) {
+                    this.batch.draw(armario, j * escalax, i * escalay, escalax, escalay);
+                    this.batch.draw(prato, j * escalax, i * escalay, escalax, escalay);
+                } else if (mapa[i][j] == 4) {
+                    this.batch.draw(lixeira, j * escalax, i * escalay, escalax, escalay);
+                }
+            }
+        }
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             this.mostrarCozinha = false;
         }
