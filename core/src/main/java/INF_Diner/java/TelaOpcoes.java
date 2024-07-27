@@ -28,31 +28,8 @@ public abstract class TelaOpcoes {
         this.setaOpcaoAtual.dispose();
     }
 
-    //Altera a opcao selecionada quando o jogador apertar as teclas W S ou as setas CIMA BAIXO
-    public void mudaOpcaoVertical(){
-        if((Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || Gdx.input.isKeyJustPressed(Input.Keys.S))){
-            if(this.opcao < getN_OPCOES() - 1){
-                this.opcao++;
-                this.audioTelas.efeitoMudarBotao();
-            }
-            else{
-                this.audioTelas.efeitoErro();
-            }
-
-        }
-        else if((Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W))){
-            if(this.opcao > 0){
-                this.opcao--;
-                this.audioTelas.efeitoMudarBotao();
-            }
-            else{
-                this.audioTelas.efeitoErro();
-            }
-        }
-    }
-
     //Altera a opcao selecionada quando o jogador apertar as teclas A D ou as setas ESQUEDA DIREITA
-    public void mudaOpcaoHorizontal(){
+    public void mudaOpcao(){
         if((Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || Gdx.input.isKeyJustPressed(Input.Keys.D))){
             if(this.opcao < getN_OPCOES() - 1){
                 this.opcao++;

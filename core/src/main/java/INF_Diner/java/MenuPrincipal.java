@@ -49,13 +49,13 @@ public class MenuPrincipal extends TelaOpcoes {
     {
         this.audioTelas.tocarMusica();
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        batch.begin();
-        batch.draw(fundoTela, 0, 0);
-        batch.draw(this.botaoPlay, X_BOTOES, Y_BOTOES);
-        batch.draw(this.botaoSettings, X_BOTOES + DISTANCIA_BOTOES, Y_BOTOES);
-        batch.draw(this.botaoExit, X_BOTOES + 2 * DISTANCIA_BOTOES, Y_BOTOES);
-        batch.draw(this.setaOpcaoAtual, X_BOTOES + DISTANCIA_BOTOES * this.opcao, ALTURA_SETA); //Desenha a seta acima da opcao selecionada
-        batch.end();
+        this.batch.begin();
+        this.batch.draw(fundoTela, 0, 0);
+        this.batch.draw(this.botaoPlay, X_BOTOES, Y_BOTOES);
+        this.batch.draw(this.botaoSettings, X_BOTOES + DISTANCIA_BOTOES, Y_BOTOES);
+        this.batch.draw(this.botaoExit, X_BOTOES + 2 * DISTANCIA_BOTOES, Y_BOTOES);
+        this.batch.draw(this.setaOpcaoAtual, X_BOTOES + DISTANCIA_BOTOES * this.opcao, ALTURA_SETA); //Desenha a seta acima da opcao selecionada
+        this.batch.end();
         this.tratadorDeEntradas();
     }
 
@@ -75,7 +75,7 @@ public class MenuPrincipal extends TelaOpcoes {
     public void tratadorDeEntradas()
     {
         super.tratadorDeEntradas(); //Referente as teclas TAB (muda modo da tela) e ENTER(selecionar)
-        this.mudaOpcaoHorizontal(); //Referente as teclas A e D e as setas ESQUERDA e DIREITA(mudar opcao)
+        this.mudaOpcao(); //Referente as teclas A e D e as setas ESQUERDA e DIREITA(mudar opcao)
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             this.fechaJogo();
         }

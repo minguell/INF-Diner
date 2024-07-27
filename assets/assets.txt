@@ -1,16 +1,18 @@
-405487830_922888865872929_1430319338172455978_n.jpg
+AumentarVolume.png
 BotaoExit - Copia.png
 BotaoExit.png
 BotaoPlay.png
 BotaoSettings.png
 Brutal.png
+Configuracoes.png
+DiminuirVolume.png
 ErroMenu.mp3
 Facil.png
-fundoGenerico.png
-hs_err_pid17008.log
-Logo.png
 Medio.png
+MenuPrincipal.png
+ModoDaTela.png
 MudarBotao.mp3
 MusicaMenu.mp3
 SelecaoMenu.mp3
 setaOpcaoAtual.png
+Voltar.png
