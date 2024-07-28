@@ -151,24 +151,6 @@ public class Receita {
         }
     }
 
-    public static Receita cozinhar(ArrayList<Receita> receitas, ArrayList<Ingrediente> ingredientesJogador){
-        for(Receita receita : receitas){
-            if(receita.getIngredientes().size() == ingredientesJogador.size()){
-                boolean match = true;
-                for(int x = 0; x < ingredientesJogador.size(); x++){
-                    if(!receita.getIngredientes().get(x).getNome().equals(ingredientesJogador.get(x).getNome())){
-                        match = false;
-                        break;
-                    }
-                }
-                if(match){
-                    return new Receita(receita);
-                }
-            }
-        }
-
-        return new Receita(1);
-    }
     //Rotina de destrucao
     public void dispose() {
         this.textura.dispose();

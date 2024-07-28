@@ -23,22 +23,24 @@ public class Cozinha {
     private final  ArrayList<Ingrediente> caixas = new ArrayList<>();
     private  ArrayList<Ingrediente> prato1 = new ArrayList<>();
     private  ArrayList<Ingrediente> prato2 = new ArrayList<>();
-    private final ArrayList<Receita> receitas = new ArrayList<>(); //Todas as receitas, usadas para comparacao
     private final Jogador jogador = new Jogador();
     private final AudioJogo audioJogo = new AudioJogo();
+    private final TodasReceitas todasReceitas = new TodasReceitas();
     private final int MATRIZ_X = 8;
     private final int MATRIZ_Y = 6;
     private final int DESLOCA_X = -60;
     private final int DESLOCA_Y = -50;
     private final float ESCALA2 = 1.5f;
-    private final int ESCALA_X = 1920 / MATRIZ_X;
-    private final int ESCALA_Y = 1080 / MATRIZ_Y;
+    private final int TELA_X = 1920;
+    private final int TELA_Y = 1080;
+    private final int ESCALA_X = TELA_X / MATRIZ_X;
+    private final int ESCALA_Y = TELA_Y / MATRIZ_Y;
     private final int TEXTO_Y = 50; //Altura do texto do inventario
     private final int TAM_IMAGEM_INVENTARIO = 50; //Altura da imagem do inventario
     private final int TEXTO_X_PALAVRA1 = 0; //X da primeira palavra do inventario
     private final int IMAGEM_X = TEXTO_X_PALAVRA1 + 260; //X da imagem do inventario
     private final int TEXTO_X_PALAVRA2 = IMAGEM_X + TAM_IMAGEM_INVENTARIO; //X da segunda palavra do inventario
-    private final int TOTAL_RECEITAS = 14;
+    private final int PONTUACAO_X = 1450; //X do texto Pontuacao
     private final int[][] mapa = { //Matriz usada para desenhho do mapa, cada numero representa um tipo de "tile"
             { 1, 0, 0, 0, 0, 0, 0, 1 },
             { 1, 0, 0, 0, 0, 0, 0, 1 },
@@ -61,9 +63,6 @@ public class Cozinha {
         caixas.add(new Ingrediente("Alface", false, 9, new Texture("Alface.png")));
         caixas.add(new Ingrediente("Peixe", true, 10, new Texture("Peixe.png")));
         this.mostrarCozinha = false;
-        for(int x = 2; x < TOTAL_RECEITAS; x++){
-            receitas.add(new Receita(x));
-        }
     }
 
     //Getter e Setter de MostraCozinha
@@ -79,15 +78,34 @@ public class Cozinha {
         return audioJogo;
     }
 
-    //Principal metodo de exibicao e operacao de cozinha
+    //Principal metodo de exibicao e operacao do jogo
     public void render(int dificuldade) {
         this.audioJogo.tocarMusica();
-        tratadorDeEntradas();
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            this.mostrarCozinha = false;
+            this.audioJogo.pararMusica();
+        }
+        //Mostra todas as receitas disponiveis se R for apertado
+        if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
+            this.todasReceitas.setMostrarReceitas(!this.todasReceitas.isMostrarReceitas());
+        }
+        if(this.todasReceitas.isMostrarReceitas()){
+            this.todasReceitas.desenhaReceitas();
+        }
+        else{ //Senao mostra a cozinha normalmente
+            loopCozinha();
+        }
+    }
+
+    //Principal metodo de exibicao e operacao de cozinha
+    public void loopCozinha(){
         ScreenUtils.clear(1f, 1f, 1f, 1f);
         this.batch.begin();
         desenhaCozinha();
         desenhaInventario();
+        this.jogador.movimentar();
         this.jogador.render(batch);
+        interacaoUtensilios();
         this.batch.end();
     }
 
@@ -161,16 +179,7 @@ public class Cozinha {
             this.batch.draw(this.jogador.getReceitaCarregada().getTextura(),  IMAGEM_X, 0, TAM_IMAGEM_INVENTARIO, TAM_IMAGEM_INVENTARIO);
             font.draw(this.batch, this.jogador.getReceitaCarregada().getNome(), TEXTO_X_PALAVRA2, TEXTO_Y);
         }
-    }
-
-    //Trata as entradas do jogador
-    public void tratadorDeEntradas(){
-        this.jogador.movimentar();
-        interacaoUtensilios();
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            this.mostrarCozinha = false;
-            this.audioJogo.pararMusica();
-        }
+        font.draw(this.batch, "Pontuacao:" + this.jogador.getDinheiro(), PONTUACAO_X, TEXTO_Y);
     }
 
     //Trata as entradas do jogador referentes aos utensilios da cozinha
@@ -294,7 +303,7 @@ public class Cozinha {
             else if(this.jogador.getCaregando() == Jogador.Carregado.RECEITA){
                 this.audioJogo.efeitoCozinhar();
                 if(this.jogador.getReceitaCarregada().getTipoPrato() == 0){
-                    Receita cozinhado = Receita.cozinhar(receitas, this.jogador.getReceitaCarregada().getIngredientes());
+                    Receita cozinhado = TodasReceitas.cozinhar(this.jogador.getReceitaCarregada().getIngredientes());
                     //Easter Egg
                     if(cozinhado.getTipoPrato() == 2){
                         this.jogador.setSkin(new Sprite(new Texture("Demonio.png")));

@@ -48,6 +48,7 @@ Pizza.png
 placeholder.png
 Prato.png
 Queijo.png
+Receitas.png
 Salada.png
 Sanduiche De Peixe.png
 SelecaoMenu.mp3
