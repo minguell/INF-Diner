@@ -25,8 +25,8 @@ public class MenuPrincipal extends TelaOpcoes {
         this.botaoSettings = new Texture("BotaoSettings.png");
         this.botaoExit = new Texture("BotaoExit.png");
         this.audioTelas = new AudioTelas();
-        this.config = new Configuracoes(audioTelas);
         this.cozinha = new Cozinha();
+        this.config = new Configuracoes(audioTelas, this.cozinha.getAudioJogo());
     }
 
     //Constante representando o numero de opcoes de botoes do menu
@@ -41,7 +41,7 @@ public class MenuPrincipal extends TelaOpcoes {
             this.config.render();
         }
         else if (this.cozinha.getMostrarCozinha()){
-            this.cozinha.render();
+            this.cozinha.render(this.config.getDificuldadeAtual());
         }
         else {
             this.render();
@@ -73,6 +73,7 @@ public class MenuPrincipal extends TelaOpcoes {
         this.botaoExit.dispose();
         this.config.dispose();
         this.audioTelas.dispose();
+        this.cozinha.dispose();
     }
 
     //Processamento de inputs do jogador

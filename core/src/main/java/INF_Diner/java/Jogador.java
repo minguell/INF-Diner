@@ -6,30 +6,38 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+//Classe que controla a estrutura do jogador e alguns de seus comandos
 public class Jogador {
-    private int dinheiro;
+    private int dinheiro; //Serve como pontuacao do jogo
     private final Sprite skin;
-    private Receita receitaCarregada;
-    private Ingrediente ingredienteCarregado;
-    private boolean viradoEsquerda; //1 esquerda -1 direita
+    private Ingrediente ingredienteCarregado; //E vazio se alguma receita estiver sendo carregada
+    private Receita receitaCarregada; //E vazio se alguma ingrediente estiver sendo carregado
+    private boolean sentidoX; //true esquerda false direita
+    private boolean sentidoY; //true baixo false cima
+    //Posicao do jogador
     private int posX;
     private int posY;
-    private final int VELOCIDADE = 10;
+    private final int X_INICIAL = 870;
+    private final int Y_INICIAL = 720;
     private final int MIN_X = 240;
     private final int MIN_Y = 0;
     private final int MAX_X = 1440;
     private final int MAX_Y = 720;
-    private final int X_INICIAL = 870;
-    private final int Y_INICIAL = 720;
+    private final int VELOCIDADE = 10;
+    public enum Carregado {NADA, INGREDIENTE, RECEITA} //Opcoes do que o jogador pode estar carregando
+    private Carregado carregando; //Indica o que o jogador esta carregando
 
+    //Construtor
     public Jogador() {
         this.dinheiro = 0;
+        this.carregando = Carregado.NADA;
         this.skin = new Sprite(new Texture("Jogador.png"));
         this.receitaCarregada = null;
         this.ingredienteCarregado = null;
         this.posX = X_INICIAL;
         this.posY = Y_INICIAL;
-        this.viradoEsquerda = true;
+        this.sentidoX = true;
+        this.sentidoY = true;
     }
 
     //Getter e Setter de Dinheiro
@@ -40,36 +48,94 @@ public class Jogador {
         this.dinheiro = dinheiro;
     }
 
-    //Getter e Setter de ReceitaCarregada
-    public Receita getReceitaCarregada() {
-        return receitaCarregada;
-    }
-    public void setReceitaCarregada(Receita receitaCarregada) {
-        this.receitaCarregada = receitaCarregada;
-    }
-
     //Getter e Setter de IngredienteCarregado
     public Ingrediente getIngredienteCarregado() {
         return ingredienteCarregado;
     }
     public void setIngredienteCarregado(Ingrediente ingredienteCarregado) {
-        this.ingredienteCarregado = ingredienteCarregado;
+        //Visa garantir que so uma coisa pode ser carregada ao mesmo tempo
+        if(ingredienteCarregado == null){
+            this.ingredienteCarregado = null;
+            this.carregando = Carregado.NADA;
+        }
+        else if(this.carregando == Carregado.NADA){
+            this.ingredienteCarregado = new Ingrediente(ingredienteCarregado);
+            this.carregando = Carregado.INGREDIENTE;
+        }
     }
 
-    //Getter e Setter de PosX
+    //Getter e Setter de ReceitaCarregada
+    public Receita getReceitaCarregada() {
+        return receitaCarregada;
+    }
+    public void setReceitaCarregada(Receita receitaCarregada) {
+        //Visa garantir que so uma coisa pode ser carregada ao mesmo tempo
+        if(receitaCarregada == null){
+            this.receitaCarregada = null;
+            this.carregando = Carregado.NADA;
+        }
+        else if(this.carregando == Carregado.NADA){
+            this.receitaCarregada = new Receita(receitaCarregada);
+            this.carregando = Carregado.RECEITA;
+        }
+    }
+
+    //Getter de Carregando
+    public Carregado getCaregando() {
+        return carregando;
+    }
+
+    //Getters e Setters das Posicoes
     public int getPosX() {
         return posX;
     }
     public void setPosX(int posX) {
         this.posX = posX;
     }
-
-    //Getter e Setter de PosY
     public int getPosY() {
         return posY;
     }
     public void setPosY(int posY) {
         this.posY = posY;
+    }
+    public int getX_INICIAL() {
+        return X_INICIAL;
+    }
+    public int getY_INICIAL() {
+        return Y_INICIAL;
+    }
+
+    //Getter da Velocidade
+    public int getVELOCIDADE() {
+        return VELOCIDADE;
+    }
+
+    //Getters e Setters dos sentidos
+    public boolean isSentidoX() {
+        return sentidoX;
+    }
+    public void setSentidoX(boolean sentidoX) {
+        this.sentidoX = sentidoX;
+    }
+    public boolean isSentidoY() {
+        return sentidoY;
+    }
+    public void setSentidoY(boolean sentidoY) {
+        this.sentidoY = sentidoY;
+    }
+
+    //Getters dos minimos e maximos
+    public int getMIN_X() {
+        return MIN_X;
+    }
+    public int getMIN_Y() {
+        return MIN_Y;
+    }
+    public int getMAX_X() {
+        return MAX_X;
+    }
+    public int getMAX_Y() {
+        return MAX_Y;
     }
 
     //Incrementa dinheiro de jogador (que serve como pontuacao)
@@ -81,46 +147,48 @@ public class Jogador {
     public void descartaCarregado(){
         this.ingredienteCarregado = null;
         this.receitaCarregada = null;
+        this.carregando = Carregado.NADA;
     }
 
     //Vai mover o jogador no sentido de dada input
     public void movimentar(){
-        if(this.posY > MIN_Y && (Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN))){
-            this.posY -= VELOCIDADE;
-        }
-        if(this.posY < MAX_Y && (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP))){
-            this.posY += VELOCIDADE;
-        }
-        if(this.posX > MIN_X && (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT))){
-            this.posX -= VELOCIDADE;
-            if(!this.viradoEsquerda){
-                this.skin.flip(true, false);
-                this.viradoEsquerda = true;
+        if(Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+            if(!this.sentidoY){
+                this.sentidoY = true;
+            }
+            if(this.posY > MIN_Y){
+                this.posY -= VELOCIDADE;
             }
         }
-        if(this.posX < MAX_X && (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT))){
-            this.posX += VELOCIDADE;
-            if(this.viradoEsquerda){
+        if(Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)){
+            if(this.sentidoY){
+                this.sentidoY = false;
+            }
+            if(this.posY < MAX_Y){
+                this.posY += VELOCIDADE;
+            }
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            if(!this.sentidoX){
                 this.skin.flip(true, false);
-                this.viradoEsquerda = false;
+                this.sentidoX = true;
+            }
+            if(this.posX > MIN_X){
+                this.posX -= VELOCIDADE;
+            }
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            if(this.sentidoX){
+                this.skin.flip(true, false);
+                this.sentidoX = false;
+            }
+            if(this.posX < MAX_X){
+                this.posX += VELOCIDADE;
             }
         }
     }
 
-    //Pega a receita pronta caso o jogador nao esteja carregando outra receita
-    public void pegarReceita(Receita receita){
-        if(this.receitaCarregada == null){
-            this.receitaCarregada = receita;
-        }
-    }
-
-    //Pega o ingrediente caso o jogador nao esteja carregando outro ingrediente
-    public void pegarIngrediente(Ingrediente ingrediente){
-        if(this.ingredienteCarregado == null){
-            this.ingredienteCarregado = ingrediente;
-        }
-    }
-
+    //Desenha o jogador na tela
     public void render(SpriteBatch batch){
         batch.draw(this.skin, this.posX, this.posY);
     }

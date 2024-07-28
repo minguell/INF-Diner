@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public abstract class TelaOpcoes {
     protected SpriteBatch batch = new SpriteBatch();
     protected Texture fundoTela;
-    protected final Texture setaOpcaoAtual = new Texture("setaOpcaoAtual.png"); //Indica visualmente a opcao selecionada
+    protected final Texture setaOpcaoAtual = new Texture("SetaOpcaoAtual.png"); //Indica visualmente a opcao selecionada
     protected AudioTelas audioTelas; //Responsavel por toda parte sonora das telas
     protected int opcao = 0; //Opcao inicial da tela, por padrao 0 e a primeira
 

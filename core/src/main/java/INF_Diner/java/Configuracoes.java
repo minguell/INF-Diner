@@ -8,8 +8,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 //Classe que permite o jogador escolher a dificuldade do jogo, o volume e o modo da tela
 //Configuracoes herda de TelaOpcoes, uma classe abstrata que possui algumas funcionalidades de telas de opcoes genericas
 public class Configuracoes extends TelaOpcoes {
-    private boolean mostrarConfiguracoes;
-    private int dificuldadeAtual;
+    private boolean mostrarConfiguracoes; //Inicia exibicao desta tela
+    private int dificuldadeAtual; //Configuracao de dificuldade do jogo
     private final Texture[] dificuldades = new Texture[3];
     private final Texture aumentarVolume = new Texture("AumentarVolume.png");
     private final Texture diminuirVolume = new Texture("DiminuirVolume.png");
@@ -19,10 +19,13 @@ public class Configuracoes extends TelaOpcoes {
     private final int X_BOTOES = 50; //X referente a posicao do mais a esquerda dos botoes
     private final int Y_BOTOES = 390;
     private final int DISTANCIA_BOTOES = 400;
+    private final AudioJogo audioJogo;
+
     //Construtor
-    public Configuracoes(AudioTelas audioTelas){
+    public Configuracoes(AudioTelas audioTelas, AudioJogo audioJogo){
         this.fundoTela = new Texture("Configuracoes.png");
         this.audioTelas = audioTelas;
+        this.audioJogo = audioJogo;
         this.dificuldadeAtual = 0;
         this.dificuldades[0] = new Texture("Facil.png");
         this.dificuldades[1] = new Texture("Medio.png");
@@ -42,7 +45,6 @@ public class Configuracoes extends TelaOpcoes {
     public int getDificuldadeAtual() {
         return dificuldadeAtual;
     }
-
     public void setDificuldadeAtual(int dificuldadeAtual) {
         this.dificuldadeAtual = dificuldadeAtual;
     }
@@ -82,6 +84,7 @@ public class Configuracoes extends TelaOpcoes {
         this.modoDaTela.dispose();
         this.voltar.dispose();
     }
+
     //Processamento de inputs do jogador
     @Override
     public void tratadorDeEntradas()
@@ -98,7 +101,7 @@ public class Configuracoes extends TelaOpcoes {
     @Override
     public void opcaoSelecionada(){
         switch(this.opcao){
-            case 0:
+            case 0: //Mudar dificuldade
                 if(this.dificuldadeAtual == 2){
                     this.dificuldadeAtual = 0;
                 }
@@ -106,24 +109,29 @@ public class Configuracoes extends TelaOpcoes {
                     this.dificuldadeAtual++;
                 }
                 break;
-            case 1:
-                if(audioTelas.getVolume() < 1.0f)
+            case 1: //Aumentar volume
+                if(audioTelas.getVolume() < 1.0f){
                     audioTelas.setVolume(0.1f + audioTelas.getVolume());
+                    audioJogo.setVolume(0.1f + audioTelas.getVolume());
+                }
                 else{
                     audioTelas.efeitoErro();
                 }
                 break;
-            case 2:
-                if(audioTelas.getVolume() > 0.2f)
+            case 2: //Diminuir volume
+                if(audioTelas.getVolume() > 0.2f){
                     audioTelas.setVolume(audioTelas.getVolume() - 0.1f);
+                    audioJogo.setVolume(audioTelas.getVolume() - 0.1f);
+                }
                 else if(audioTelas.getVolume() < 0.2f){
                     audioTelas.setVolume(0f);
+                    audioJogo.setVolume(0f);
                 }
                 break;
-            case 3:
+            case 3: //Alterar modo tela
                 alternarModoTela();
                 break;
-            case 4:
+            case 4: //Voltar
                 setMostrarConfiguracoes(false);
                 break;
         }
