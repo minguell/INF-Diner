@@ -2,6 +2,8 @@ Alface.png
 Armario.png
 Arroz.png
 AumentarVolume.png
+Balcao.png
+balcao.webp
 Bife.png
 BotaoExit.png
 BotaoPlay.png
@@ -19,12 +21,14 @@ Facil.png
 Feijao.png
 Fogao.png
 Gororoba.png
+Grama.png
 InteragirIngredientes.mp3
 Jogador.png
 Lixeira.png
 Macarrao.png
 Medio.png
 MenuPrincipal.png
+Mesa.png
 Mistura.png
 ModoDaTela.png
 MudarBotao.mp3
