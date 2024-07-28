@@ -17,12 +17,12 @@ public class Jogador {
     //Posicao do jogador
     private int posX;
     private int posY;
-    private final int X_INICIAL = 870;
-    private final int Y_INICIAL = 720;
-    private final int MIN_X = 240;
-    private final int MIN_Y = 0;
-    private final int MAX_X = 1440;
-    private final int MAX_Y = 720;
+    private int X_INICIAL = 870;
+    private int Y_INICIAL = 720;
+    private int MIN_X = 240;
+    private int MIN_Y = 700;
+    private int MAX_X = 1440;
+    private int MAX_Y = 1440;
     private final int VELOCIDADE = 10;
     public enum Carregado {NADA, INGREDIENTE, RECEITA} //Opcoes do que o jogador pode estar carregando
     private Carregado carregando; //Indica o que o jogador esta carregando

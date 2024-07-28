@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 //Classe central do fluxo do jogo em si e exibe a cozinha, com suas funcionalidades
 public class Cozinha {
-    private boolean mostrarCozinha; //Inicia a exibicao desta tela
+    public boolean mostrarCozinha; //Inicia a exibicao desta tela
     private final SpriteBatch batch = new SpriteBatch();
     private final Texture panela = new Texture("Panela.png");
     private final Texture caixa = new Texture("Caixa.png");
