@@ -20,9 +20,9 @@ public class Jogador {
     private int X_INICIAL = 870;
     private int Y_INICIAL = 720;
     private int MIN_X = 240;
-    private int MIN_Y = 700;
+    private int MIN_Y = -10;
     private int MAX_X = 1440;
-    private int MAX_Y = 1440;
+    private int MAX_Y = 720;
     private final int VELOCIDADE = 10;
     public enum Carregado {NADA, INGREDIENTE, RECEITA} //Opcoes do que o jogador pode estar carregando
     private Carregado carregando; //Indica o que o jogador esta carregando
@@ -116,6 +116,12 @@ public class Jogador {
     public int getY_INICIAL() {
         return Y_INICIAL;
     }
+    public void setX_INICIAL(int x_INICIAL) {
+        X_INICIAL = x_INICIAL;
+    }
+    public void setY_INICIAL(int y_INICIAL) {
+        Y_INICIAL = y_INICIAL;
+    }
 
     //Getter da Velocidade
     public int getVELOCIDADE() {
@@ -136,18 +142,30 @@ public class Jogador {
         this.sentidoY = sentidoY;
     }
 
-    //Getters dos minimos e maximos
+    //Getters e Setters dos minimos e maximos
     public int getMIN_X() {
         return MIN_X;
+    }
+    public void setMIN_X(int MIN_X) {
+        this.MIN_X = MIN_X;
     }
     public int getMIN_Y() {
         return MIN_Y;
     }
+    public void setMIN_Y(int MIN_Y) {
+        this.MIN_Y = MIN_Y;
+    }
     public int getMAX_X() {
         return MAX_X;
     }
+    public void setMAX_X(int MAX_X) {
+        this.MAX_X = MAX_X;
+    }
     public int getMAX_Y() {
         return MAX_Y;
+    }
+    public void setMAX_Y(int MAX_Y) {
+        this.MAX_Y = MAX_Y;
     }
 
     //Incrementa dinheiro de jogador (que serve como pontuacao)
@@ -198,6 +216,28 @@ public class Jogador {
                 this.posX += VELOCIDADE;
             }
         }
+    }
+
+    //Verifica se o jogador saiu da cozinha e foi pro restaurante
+    public boolean saiuCozinha(){
+        if(this.posY == MIN_Y){
+            this.posY = 900;
+            this.MAX_Y = 910;
+            this.MIN_Y = 720;
+            return true;
+        }
+        return false;
+    }
+
+    //Verifica se o jogador saiu do restaurante e foi pra cozinha
+    public boolean saiuRestaurante(){
+        if(this.posY == MAX_Y){
+            this.posY = 0;
+            this.MAX_Y = 720;
+            this.MIN_Y = -10;
+            return true;
+        }
+        return false;
     }
 
     //Desenha o jogador na tela

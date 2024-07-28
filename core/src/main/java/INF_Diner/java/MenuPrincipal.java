@@ -13,7 +13,6 @@ public class MenuPrincipal extends TelaOpcoes {
     private final Texture botaoExit;
     private final Configuracoes config;
     private final Cozinha cozinha;
-    private final Restaurante restaurante;
     private final int ALTURA_SETA = 300;
     private final int X_BOTOES = 1000; //X referente a posicao do mais a esquerda dos botoes
     private final int Y_BOTOES = 25;
@@ -27,7 +26,6 @@ public class MenuPrincipal extends TelaOpcoes {
         this.botaoExit = new Texture("BotaoExit.png");
         this.audioTelas = new AudioTelas();
         this.cozinha = new Cozinha();
-        this.restaurante = new Restaurante();
         this.config = new Configuracoes(audioTelas, this.cozinha.getAudioJogo());
     }
 
@@ -42,8 +40,8 @@ public class MenuPrincipal extends TelaOpcoes {
         if(this.config.getMostrarConfiguracoes()){
             this.config.render();
         }
-        else if (this.restaurante.getMostrarRestaurante()){
-            this.restaurante.render(this.config.getDificuldadeAtual());
+        else if (this.cozinha.getMostrarCozinha()){
+            this.cozinha.render(this.config.getDificuldadeAtual());
         }
         else {
             this.render();
@@ -75,7 +73,7 @@ public class MenuPrincipal extends TelaOpcoes {
         this.botaoExit.dispose();
         this.config.dispose();
         this.audioTelas.dispose();
-        this.restaurante.dispose();
+        this.cozinha.dispose();
     }
 
     //Processamento de inputs do jogador
@@ -109,7 +107,7 @@ public class MenuPrincipal extends TelaOpcoes {
 
     //Prepara o gameplay
     public void iniciaJogo(){
-        this.restaurante.setMostrarRestaurante(true);
+        this.cozinha.setMostrarCozinha(true);
         this.audioTelas.pararMusica();
     }
 

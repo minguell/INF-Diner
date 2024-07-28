@@ -2,6 +2,7 @@ A La Minuta.png
 Alface.png
 Armario.png
 Arroz.png
+Arvore.png
 AumentarVolume.png
 Batida De Proteina.png
 Bife.png
@@ -22,6 +23,7 @@ Facil.png
 Feijao.png
 Fogao.png
 Gororoba.png
+Grama.png
 Hamburguer.png
 InteragirIngredientes.mp3
 Jogador.png

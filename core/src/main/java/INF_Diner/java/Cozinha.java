@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 //Classe central do fluxo do jogo em si e exibe a cozinha, com suas funcionalidades
 public class Cozinha {
-    public boolean mostrarCozinha; //Inicia a exibicao desta tela
+    private boolean mostrarCozinha; //Inicia a exibicao desta tela
     private final SpriteBatch batch = new SpriteBatch();
     private final Texture panela = new Texture("Panela.png");
     private final Texture caixa = new Texture("Caixa.png");
@@ -41,6 +41,7 @@ public class Cozinha {
     private final int IMAGEM_X = TEXTO_X_PALAVRA1 + 260; //X da imagem do inventario
     private final int TEXTO_X_PALAVRA2 = IMAGEM_X + TAM_IMAGEM_INVENTARIO; //X da segunda palavra do inventario
     private final int PONTUACAO_X = 1450; //X do texto Pontuacao
+    private final Restaurante restaurante = new Restaurante(jogador, audioJogo, batch);
     private final int[][] mapa = { //Matriz usada para desenhho do mapa, cada numero representa um tipo de "tile"
             { 1, 0, 0, 0, 0, 0, 0, 1 },
             { 1, 0, 0, 0, 0, 0, 0, 1 },
@@ -89,24 +90,28 @@ public class Cozinha {
         if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
             this.todasReceitas.setMostrarReceitas(!this.todasReceitas.isMostrarReceitas());
         }
+        ScreenUtils.clear(1f, 1f, 1f, 1f);
+        this.batch.begin();
         if(this.todasReceitas.isMostrarReceitas()){
             this.todasReceitas.desenhaReceitas();
+        }
+        else if(this.restaurante.getMostrarRestaurante()){
+            this.restaurante.render(dificuldade);
         }
         else{ //Senao mostra a cozinha normalmente
             loopCozinha();
         }
+        desenhaInventario();
+        this.batch.end();
     }
 
     //Principal metodo de exibicao e operacao de cozinha
     public void loopCozinha(){
-        ScreenUtils.clear(1f, 1f, 1f, 1f);
-        this.batch.begin();
         desenhaCozinha();
-        desenhaInventario();
         this.jogador.movimentar();
         this.jogador.render(batch);
         interacaoUtensilios();
-        this.batch.end();
+        this.restaurante.setMostrarRestaurante(this.jogador.saiuCozinha());
     }
 
     //Desenha na tela toda a cozinha
@@ -330,6 +335,7 @@ public class Cozinha {
         this.lixeira.dispose();
         this.fogao.dispose();
         this.audioJogo.dispose();
+        this.restaurante.dispose();
         for (Ingrediente value : caixas) {
             value.dispose();
         }
