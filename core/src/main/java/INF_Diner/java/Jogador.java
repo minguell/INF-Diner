@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 //Classe que controla a estrutura do jogador e alguns de seus comandos
 public class Jogador {
     private int dinheiro; //Serve como pontuacao do jogo
-    private final Sprite skin;
+    private Sprite skin;
     private Ingrediente ingredienteCarregado; //E vazio se alguma receita estiver sendo carregada
     private Receita receitaCarregada; //E vazio se alguma ingrediente estiver sendo carregado
     private boolean sentidoX; //true esquerda false direita
@@ -62,6 +62,18 @@ public class Jogador {
             this.ingredienteCarregado = new Ingrediente(ingredienteCarregado);
             this.carregando = Carregado.INGREDIENTE;
         }
+    }
+
+    //Getter e Setter de Skin
+    public Sprite getSkin() {
+        return skin;
+    }
+    public void setSkin(Sprite skin) {
+        this.skin = skin;
+        if(!sentidoX){
+            this.skin.flip(true, false);
+        }
+
     }
 
     //Getter e Setter de ReceitaCarregada

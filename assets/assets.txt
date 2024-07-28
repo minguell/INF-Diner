@@ -1,7 +1,9 @@
+A La Minuta.png
 Alface.png
 Armario.png
 Arroz.png
 AumentarVolume.png
+Batida De Proteina.png
 Bife.png
 BotaoExit.png
 BotaoPlay.png
@@ -12,6 +14,7 @@ Chao.png
 Cinzas.png
 Configuracoes.png
 Cozinhar.mp3
+Demonio.png
 Descartar.mp3
 DiminuirVolume.png
 ErroMenu.mp3
@@ -19,10 +22,15 @@ Facil.png
 Feijao.png
 Fogao.png
 Gororoba.png
+Hamburguer.png
 InteragirIngredientes.mp3
 Jogador.png
 Lixeira.png
+Macarrao Bolonhesa.png
+Macarrao Com Peixe.png
+Macarrao Com Queijo.png
 Macarrao.png
+Marmita Simples.png
 Medio.png
 MenuPrincipal.png
 Mistura.png
@@ -32,11 +40,16 @@ MusicaJogo.mp3
 MusicaMenu.mp3
 Ovo.png
 Panela.png
+Pao Com Ovo.png
 Pao.png
 Peixe.png
+Pizza Demoniaca.png
+Pizza.png
 placeholder.png
 Prato.png
 Queijo.png
+Salada.png
+Sanduiche De Peixe.png
 SelecaoMenu.mp3
 SetaOpcaoAtual.png
 Tomate.png

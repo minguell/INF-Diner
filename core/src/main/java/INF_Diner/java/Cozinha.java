@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -37,6 +38,7 @@ public class Cozinha {
     private final int TEXTO_X_PALAVRA1 = 0; //X da primeira palavra do inventario
     private final int IMAGEM_X = TEXTO_X_PALAVRA1 + 260; //X da imagem do inventario
     private final int TEXTO_X_PALAVRA2 = IMAGEM_X + TAM_IMAGEM_INVENTARIO; //X da segunda palavra do inventario
+    private final int TOTAL_RECEITAS = 14;
     private final int[][] mapa = { //Matriz usada para desenhho do mapa, cada numero representa um tipo de "tile"
             { 1, 0, 0, 0, 0, 0, 0, 1 },
             { 1, 0, 0, 0, 0, 0, 0, 1 },
@@ -59,6 +61,9 @@ public class Cozinha {
         caixas.add(new Ingrediente("Alface", false, 9, new Texture("Alface.png")));
         caixas.add(new Ingrediente("Peixe", true, 10, new Texture("Peixe.png")));
         this.mostrarCozinha = false;
+        for(int x = 2; x < TOTAL_RECEITAS; x++){
+            receitas.add(new Receita(x));
+        }
     }
 
     //Getter e Setter de MostraCozinha
@@ -289,7 +294,11 @@ public class Cozinha {
             else if(this.jogador.getCaregando() == Jogador.Carregado.RECEITA){
                 this.audioJogo.efeitoCozinhar();
                 if(this.jogador.getReceitaCarregada().getTipoPrato() == 0){
-                    Receita cozinhado = cozinhar();
+                    Receita cozinhado = Receita.cozinhar(receitas, this.jogador.getReceitaCarregada().getIngredientes());
+                    //Easter Egg
+                    if(cozinhado.getTipoPrato() == 2){
+                        this.jogador.setSkin(new Sprite(new Texture("Demonio.png")));
+                    }
                     this.jogador.descartaCarregado();
                     this.jogador.setReceitaCarregada(cozinhado);
                 }
@@ -299,15 +308,6 @@ public class Cozinha {
                 }
             }
         }
-    }
-
-    //Retorna uma receita baseado nos ingredientes do jogador e da lista disponivel
-    public Receita cozinhar(){
-        for (Receita receita : this.receitas) {
-            if (receita.ingredientes.equals(this.jogador.getReceitaCarregada().ingredientes))
-                return receita;
-        }
-        return new Receita(1);
     }
 
     //Rotina de encerramento
