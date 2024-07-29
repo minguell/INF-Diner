@@ -10,6 +10,7 @@ public class AudioJogo {
     private final Sound descartar;
     private final Sound interagirIngredientes;
     private final Sound cozinhar;
+    private final Sound nao;
     private float volume;
 
     //Construtor
@@ -18,6 +19,7 @@ public class AudioJogo {
         descartar = Gdx.audio.newSound(Gdx.files.internal("Descartar.mp3"));
         interagirIngredientes =  Gdx.audio.newSound(Gdx.files.internal("InteragirIngredientes.mp3"));
         cozinhar = Gdx.audio.newSound(Gdx.files.internal("Cozinhar.mp3"));
+        nao = Gdx.audio.newSound(Gdx.files.internal("Nao.mp3"));
         musica.setLooping(true); //Faz com que a musica rode infinitamente
         this.volume = 1.0f;
     }
@@ -62,6 +64,11 @@ public class AudioJogo {
     //Efeito sonoro de quando o jogador cozinha algo
     public void efeitoCozinhar(){
         this.cozinhar.play(this.volume);
+    }
+
+    //Efeito sonoro de quando o jogador nao satisfaz o pedido dos clientes corretamente
+    public void efeitoNao(){
+        this.nao.play(this.volume);
     }
 
 }

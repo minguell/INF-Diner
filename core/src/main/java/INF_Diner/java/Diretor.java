@@ -1,67 +1,70 @@
 package INF_Diner.java;
 
 import com.badlogic.gdx.graphics.Texture;
-
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Diretor extends Cliente{
-    private int gorjeta;
-    private ArrayList<Receita> banquete;
-    private final int TOTAL_DIRETORES = 1;
+    private int pagamento;
+    private int banquete;
+    private final int TOTAL_DIRETORES = 2;
     private final int MAX_GORJETA = 20;
-    private final int TEMPO_ESPERA = 65;
+    private final float TEMPO_ESPERA = 70f;
 
-    Diretor(double tempoDeJogo){
-        super(tempoDeJogo);
+    Diretor(int entrada){
+        super(entrada);
         Random rand = new Random();
-        this.gorjeta = rand.nextInt(MAX_GORJETA);
-        this.banquete = new ArrayList<>();
-        this.banquete.add(randomizaPedido());
-        this.banquete.add(randomizaPedido());
+        this.pagamento = rand.nextInt(MAX_GORJETA);
+        this.banquete = 2;
         this.setTempoEspera(TEMPO_ESPERA);
     }
 
     //Getter e Setter de Gorjeta
-    public int getGorjeta() {
-        return gorjeta;
+    public int getPagamento() {
+        return pagamento;
     }
-    public void setGorjeta(int gorjeta) {
-        this.gorjeta = gorjeta;
+    public void setPagamento(int pagamento) {
+        this.pagamento = pagamento;
     }
 
     //Getter e setter de Banquete
-    public ArrayList<Receita> getBanquete() {
+    public int getBanquete() {
         return banquete;
     }
-    public void setBanquete(ArrayList<Receita> banquete) {
+    public void setBanquete(int banquete) {
         this.banquete = banquete;
     }
 
-
-    //AINDA FALTA IMPLEMENTAR A CONSIDERACAO DO TEMPO DE JOGO
+    //O pagamento equivale ao dobro do numero de ingredientes dos 3 pedidos mais uma gorjeta
     @Override
-    public int pagaPedido(double tempoDeJogo){
-        return (this.getPedido().ingredientes.size() * 2) + (this.banquete.get(0).ingredientes.size() * 2) + (this.banquete.get(0).ingredientes.size() * 2) + this.gorjeta;
+    public int pagaPedido(){
+        super.setPagou(true);
+        return pagamento + this.getPedido().ingredientes.size() * 2;
     }
 
-    //IMPLEMENTAR
+    //Indica que o jogador ja esta contente apos o primeiro pedido
     @Override
-    public void fazPedido(){
+    public boolean satisfeito(){
+        return banquete == 0;
+    }
+
+    //Nao existe para professor
+    @Override
+    public void atualizaPedido(){
+        this.banquete--;
+        this.pagamento += this.getPedido().ingredientes.size();
+        this.setPedido(randomizaPedido());
     }
 
     //Gera aleatoriamente uma skin para o professor rico dentre as disponiveis
     @Override
     public Texture geraSkin(){
         Random rand = new Random();
-        return new Texture("diretor" + rand.nextInt(TOTAL_DIRETORES));
+        return new Texture("Diretor" + rand.nextInt(TOTAL_DIRETORES) + ".png");
     }
 
     //Rotina de destrucao
     @Override
     public void dispose() {
         super.dispose();
-        this.banquete.get(0).dispose();
-        this.banquete.get(1).dispose();
     }
 }

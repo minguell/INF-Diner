@@ -26,6 +26,7 @@ public class Cozinha {
     private final Jogador jogador = new Jogador();
     private final AudioJogo audioJogo = new AudioJogo();
     private final TodasReceitas todasReceitas = new TodasReceitas();
+    private static float tempo = 0f;
     private final int MATRIZ_X = 8;
     private final int MATRIZ_Y = 6;
     private final int DESLOCA_X = -60;
@@ -40,7 +41,8 @@ public class Cozinha {
     private final int TEXTO_X_PALAVRA1 = 0; //X da primeira palavra do inventario
     private final int IMAGEM_X = TEXTO_X_PALAVRA1 + 260; //X da imagem do inventario
     private final int TEXTO_X_PALAVRA2 = IMAGEM_X + TAM_IMAGEM_INVENTARIO; //X da segunda palavra do inventario
-    private final int PONTUACAO_X = 1450; //X do texto Pontuacao
+    private final int PONTUACAO_X = 1400; //X do texto Pontuacao
+    private final int CRONOMETRO_X = 900;
     private final Restaurante restaurante = new Restaurante(jogador, audioJogo, batch);
     private final int[][] mapa = { //Matriz usada para desenhho do mapa, cada numero representa um tipo de "tile"
             { 1, 0, 0, 0, 0, 0, 0, 1 },
@@ -74,13 +76,21 @@ public class Cozinha {
         this.mostrarCozinha = mostrarCozinha;
     }
 
+    //Getter e Setter de Tempo
+    public static float getTempo() {
+        return tempo;
+    }
+    public static void setTempo(float tempo) {
+        Cozinha.tempo = tempo;
+    }
+
     //Getter de AudioJogo
     public AudioJogo getAudioJogo() {
         return audioJogo;
     }
 
     //Principal metodo de exibicao e operacao do jogo
-    public void render(int dificuldade) {
+    public void render() {
         this.audioJogo.tocarMusica();
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             this.mostrarCozinha = false;
@@ -90,16 +100,20 @@ public class Cozinha {
         if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
             this.todasReceitas.setMostrarReceitas(!this.todasReceitas.isMostrarReceitas());
         }
-        ScreenUtils.clear(1f, 1f, 1f, 1f);
         this.batch.begin();
         if(this.todasReceitas.isMostrarReceitas()){
             this.todasReceitas.desenhaReceitas();
         }
-        else if(this.restaurante.getMostrarRestaurante()){
-            this.restaurante.render(dificuldade);
-        }
-        else{ //Senao mostra a cozinha normalmente
-            loopCozinha();
+        else {
+            ScreenUtils.clear(1f, 1f, 1f, 1f);
+            Cozinha.tempo += Gdx.graphics.getDeltaTime();
+            if (this.restaurante.getMostrarRestaurante()) { //Mostra o restaurante
+                this.restaurante.render();
+            }
+            else { //Senao mostra a cozinha normalmente, e atualiza o estado dos professores
+                restaurante.atualizaProfessores();
+                loopCozinha();
+            }
         }
         desenhaInventario();
         this.batch.end();
@@ -185,6 +199,7 @@ public class Cozinha {
             font.draw(this.batch, this.jogador.getReceitaCarregada().getNome(), TEXTO_X_PALAVRA2, TEXTO_Y);
         }
         font.draw(this.batch, "Pontuacao:" + this.jogador.getDinheiro(), PONTUACAO_X, TEXTO_Y);
+        font.draw(this.batch, "" + Cozinha.tempo , CRONOMETRO_X, TEXTO_Y);
     }
 
     //Trata as entradas do jogador referentes aos utensilios da cozinha

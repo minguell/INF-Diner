@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 //Configuracoes herda de TelaOpcoes, uma classe abstrata que possui algumas funcionalidades de telas de opcoes genericas
 public class Configuracoes extends TelaOpcoes {
     private boolean mostrarConfiguracoes; //Inicia exibicao desta tela
-    private int dificuldadeAtual; //Configuracao de dificuldade do jogo
+    public static int dificuldadeAtual = 0; //Configuracao de dificuldade do jogo
     private final Texture[] dificuldades = new Texture[3];
     private final Texture aumentarVolume = new Texture("AumentarVolume.png");
     private final Texture diminuirVolume = new Texture("DiminuirVolume.png");
@@ -26,7 +26,6 @@ public class Configuracoes extends TelaOpcoes {
         this.fundoTela = new Texture("Configuracoes.png");
         this.audioTelas = audioTelas;
         this.audioJogo = audioJogo;
-        this.dificuldadeAtual = 0;
         this.dificuldades[0] = new Texture("Facil.png");
         this.dificuldades[1] = new Texture("Medio.png");
         this.dificuldades[2] = new Texture("Brutal.png");
@@ -46,7 +45,7 @@ public class Configuracoes extends TelaOpcoes {
         return dificuldadeAtual;
     }
     public void setDificuldadeAtual(int dificuldadeAtual) {
-        this.dificuldadeAtual = dificuldadeAtual;
+        Configuracoes.dificuldadeAtual = dificuldadeAtual;
     }
 
     //Constante representando o numero de opcoes de botoes do menu
@@ -62,7 +61,7 @@ public class Configuracoes extends TelaOpcoes {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         this.batch.begin();
         this.batch.draw(this.fundoTela, 0, 0);
-        this.batch.draw(this.dificuldades[dificuldadeAtual], X_BOTOES, Y_BOTOES);
+        this.batch.draw(this.dificuldades[Configuracoes.dificuldadeAtual], X_BOTOES, Y_BOTOES);
         this.batch.draw(this.aumentarVolume, X_BOTOES + DISTANCIA_BOTOES, Y_BOTOES);
         this.batch.draw(this.diminuirVolume, X_BOTOES + 2*DISTANCIA_BOTOES, Y_BOTOES);
         this.batch.draw(this.modoDaTela, X_BOTOES + 3*DISTANCIA_BOTOES, Y_BOTOES);
@@ -102,11 +101,11 @@ public class Configuracoes extends TelaOpcoes {
     public void opcaoSelecionada(){
         switch(this.opcao){
             case 0: //Mudar dificuldade
-                if(this.dificuldadeAtual == 2){
-                    this.dificuldadeAtual = 0;
+                if(Configuracoes.dificuldadeAtual == 2){
+                    Configuracoes.dificuldadeAtual = 0;
                 }
                 else{
-                    this.dificuldadeAtual++;
+                    Configuracoes.dificuldadeAtual++;
                 }
                 break;
             case 1: //Aumentar volume

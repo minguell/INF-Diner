@@ -41,7 +41,7 @@ public class MenuPrincipal extends TelaOpcoes {
             this.config.render();
         }
         else if (this.cozinha.getMostrarCozinha()){
-            this.cozinha.render(this.config.getDificuldadeAtual());
+            this.cozinha.render();
         }
         else {
             this.render();

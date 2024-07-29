@@ -147,7 +147,7 @@ public class Receita {
             case 11: return "Salada";
             case 12: return "Batida De Proteina";
             case 13: return "Sanduiche De Peixe";
-            default: return "Invalido";
+            default: return "Gororoba";
         }
     }
 

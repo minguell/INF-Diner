@@ -9,9 +9,10 @@ import java.util.ArrayList;
 //Refere a uma de cada receita, para fins de comparacao e exibicao
 public class TodasReceitas {
     private final SpriteBatch batch = new SpriteBatch();
-    private final int TOTAL_RECEITAS = 14;
+    private static final int TOTAL_RECEITAS = 14;
+    private static final int TOTAL_RECEITAS_VALIDAS = TOTAL_RECEITAS - 3;
     private final Texture listaReceitas = new Texture("Receitas.png");
-    private static final ArrayList<Receita> receitas = new ArrayList<>(); //Todas as receitas, usadas para comparacao
+    public static final ArrayList<Receita> receitas = new ArrayList<>(); //Todas as receitas, usadas para comparacao
     private boolean mostrarReceitas = false;
     private final int TELA_X = 1920;
     private final int TEXTO_Y0 = 1040;
@@ -28,8 +29,11 @@ public class TodasReceitas {
     }
 
     //Getter TOTAL_RECEITAS
-    public int getTOTAL_RECEITAS() {
+    public static int getTOTAL_RECEITAS() {
         return TOTAL_RECEITAS;
+    }
+    public static int getTOTAL_RECEITAS_VALIDAS() {
+        return TOTAL_RECEITAS_VALIDAS;
     }
 
     //Getter ListaReceitas
@@ -44,6 +48,8 @@ public class TodasReceitas {
     public void setMostrarReceitas(boolean mostrarReceitas) {
         this.mostrarReceitas = mostrarReceitas;
     }
+
+
 
     //Desenha a lista de receitas na tela
     public void desenhaReceitas(){

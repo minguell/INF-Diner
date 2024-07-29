@@ -4,6 +4,7 @@ Armario.png
 Arroz.png
 Arvore.png
 AumentarVolume.png
+BalaoDeFala.png
 Batida De Proteina.png
 Bife.png
 BotaoExit.png
@@ -18,6 +19,9 @@ Cozinhar.mp3
 Demonio.png
 Descartar.mp3
 DiminuirVolume.png
+Diretor0.png
+Diretor1.png
+DiretorTemplate.png
 ErroMenu.mp3
 Facil.png
 Feijao.png
@@ -40,6 +44,7 @@ ModoDaTela.png
 MudarBotao.mp3
 MusicaJogo.mp3
 MusicaMenu.mp3
+Nao.mp3
 Ovo.png
 Panela.png
 Pao Com Ovo.png
@@ -47,8 +52,19 @@ Pao.png
 Peixe.png
 Pizza Demoniaca.png
 Pizza.png
-placeholder.png
 Prato.png
+Professor0.png
+Professor1.png
+Professor2.png
+Professor3.png
+Professor4.png
+Professor5.png
+ProfessorRico0.png
+ProfessorRico1.png
+ProfessorRico2.png
+ProfessorRico3.png
+ProfessorRicoTemplate.png
+ProfessorTemplate.png
 Queijo.png
 Receitas.png
 Salada.png
