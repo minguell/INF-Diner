@@ -15,6 +15,7 @@ Caixa.png
 Chao.png
 Cinzas.png
 Configuracoes.png
+Controles.png
 Cozinhar.mp3
 Demonio.png
 Descartar.mp3
@@ -45,6 +46,7 @@ MudarBotao.mp3
 MusicaJogo.mp3
 MusicaMenu.mp3
 Nao.mp3
+Oi.mp3
 Ovo.png
 Panela.png
 Pao Com Ovo.png
@@ -71,5 +73,7 @@ Salada.png
 Sanduiche De Peixe.png
 SelecaoMenu.mp3
 SetaOpcaoAtual.png
+Tchau.mp3
 Tomate.png
+Valeu.mp3
 Voltar.png

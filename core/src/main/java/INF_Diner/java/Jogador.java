@@ -8,13 +8,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 //Classe que controla a estrutura do jogador e alguns de seus comandos
 public class Jogador {
-    private int dinheiro; //Serve como pontuacao do jogo
+    //Atributos
     private Sprite skin;
     private Ingrediente ingredienteCarregado; //E vazio se alguma receita estiver sendo carregada
     private Receita receitaCarregada; //E vazio se alguma ingrediente estiver sendo carregado
+    public enum Carregado {NADA, INGREDIENTE, RECEITA} //Opcoes do que o jogador pode estar carregando
+    private Carregado carregando; //Indica o que o jogador esta carregando
+    private int dinheiro; //Serve como pontuacao do jogo
+    //Sentido, posicao e velocidade
     private boolean sentidoX; //true esquerda false direita
     private boolean sentidoY; //true baixo false cima
-    //Posicao do jogador
     private int posX;
     private int posY;
     private int X_INICIAL = 870;
@@ -24,8 +27,6 @@ public class Jogador {
     private int MAX_X = 1440;
     private int MAX_Y = 720;
     private final int VELOCIDADE = 10;
-    public enum Carregado {NADA, INGREDIENTE, RECEITA} //Opcoes do que o jogador pode estar carregando
-    private Carregado carregando; //Indica o que o jogador esta carregando
 
     //Construtor
     public Jogador() {
@@ -40,15 +41,13 @@ public class Jogador {
         this.sentidoY = true;
     }
 
-    //Getter e Setter de Dinheiro
+    //Getters e Setters
     public int getDinheiro() {
         return dinheiro;
     }
     public void setDinheiro(int dinheiro) {
         this.dinheiro = dinheiro;
     }
-
-    //Getter e Setter de IngredienteCarregado
     public Ingrediente getIngredienteCarregado() {
         return ingredienteCarregado;
     }
@@ -63,8 +62,6 @@ public class Jogador {
             this.carregando = Carregado.INGREDIENTE;
         }
     }
-
-    //Getter e Setter de Skin
     public Sprite getSkin() {
         return skin;
     }
@@ -73,10 +70,7 @@ public class Jogador {
         if(!sentidoX){
             this.skin.flip(true, false);
         }
-
     }
-
-    //Getter e Setter de ReceitaCarregada
     public Receita getReceitaCarregada() {
         return receitaCarregada;
     }
@@ -91,13 +85,9 @@ public class Jogador {
             this.carregando = Carregado.RECEITA;
         }
     }
-
-    //Getter de Carregando
     public Carregado getCaregando() {
         return carregando;
     }
-
-    //Getters e Setters das Posicoes
     public int getPosX() {
         return posX;
     }
@@ -122,13 +112,9 @@ public class Jogador {
     public void setY_INICIAL(int y_INICIAL) {
         Y_INICIAL = y_INICIAL;
     }
-
-    //Getter da Velocidade
     public int getVELOCIDADE() {
         return VELOCIDADE;
     }
-
-    //Getters e Setters dos sentidos
     public boolean isSentidoX() {
         return sentidoX;
     }
@@ -141,8 +127,6 @@ public class Jogador {
     public void setSentidoY(boolean sentidoY) {
         this.sentidoY = sentidoY;
     }
-
-    //Getters e Setters dos minimos e maximos
     public int getMIN_X() {
         return MIN_X;
     }
@@ -168,17 +152,7 @@ public class Jogador {
         this.MAX_Y = MAX_Y;
     }
 
-    //Incrementa dinheiro de jogador (que serve como pontuacao)
-    public void recebeDinheiro(int valor){
-        this.dinheiro += valor;
-    }
-
-    //Descarta tudo que o jogador carrega
-    public void descartaCarregado(){
-        this.ingredienteCarregado = null;
-        this.receitaCarregada = null;
-        this.carregando = Carregado.NADA;
-    }
+    //Outros Metodos
 
     //Vai mover o jogador no sentido de dada input
     public void movimentar(){
@@ -239,6 +213,19 @@ public class Jogador {
         }
         return false;
     }
+
+    //Incrementa dinheiro de jogador (que serve como pontuacao)
+    public void recebeDinheiro(int valor){
+        this.dinheiro += valor;
+    }
+
+    //Descarta tudo que o jogador carrega
+    public void descartaCarregado(){
+        this.ingredienteCarregado = null;
+        this.receitaCarregada = null;
+        this.carregando = Carregado.NADA;
+    }
+
 
     //Desenha o jogador na tela
     public void render(SpriteBatch batch){

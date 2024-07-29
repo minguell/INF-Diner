@@ -11,7 +11,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 //Classe central do fluxo do jogo em si e exibe a cozinha, com suas funcionalidades
 public class Cozinha {
+    //Atributos
     private boolean mostrarCozinha; //Inicia a exibicao desta tela
+    private static float tempo;
+    private final float DURACAO_PARTIDA = 300f;
     private final SpriteBatch batch = new SpriteBatch();
     private final Texture panela = new Texture("Panela.png");
     private final Texture caixa = new Texture("Caixa.png");
@@ -25,17 +28,15 @@ public class Cozinha {
     private  ArrayList<Ingrediente> prato2 = new ArrayList<>();
     private final Jogador jogador = new Jogador();
     private final AudioJogo audioJogo = new AudioJogo();
+    private final Restaurante restaurante = new Restaurante(jogador, audioJogo, batch);
     private final TodasReceitas todasReceitas = new TodasReceitas();
-    private static float tempo = 0f;
     private final int MATRIZ_X = 8;
     private final int MATRIZ_Y = 6;
     private final int DESLOCA_X = -60;
     private final int DESLOCA_Y = -50;
     private final float ESCALA2 = 1.5f;
-    private final int TELA_X = 1920;
-    private final int TELA_Y = 1080;
-    private final int ESCALA_X = TELA_X / MATRIZ_X;
-    private final int ESCALA_Y = TELA_Y / MATRIZ_Y;
+    private final int ESCALA_X = INF_Diner.TELA_X / MATRIZ_X;
+    private final int ESCALA_Y = INF_Diner.TELA_Y / MATRIZ_Y;
     private final int TEXTO_Y = 50; //Altura do texto do inventario
     private final int TAM_IMAGEM_INVENTARIO = 50; //Altura da imagem do inventario
     private final int TEXTO_X_PALAVRA1 = 0; //X da primeira palavra do inventario
@@ -43,7 +44,6 @@ public class Cozinha {
     private final int TEXTO_X_PALAVRA2 = IMAGEM_X + TAM_IMAGEM_INVENTARIO; //X da segunda palavra do inventario
     private final int PONTUACAO_X = 1400; //X do texto Pontuacao
     private final int CRONOMETRO_X = 900;
-    private final Restaurante restaurante = new Restaurante(jogador, audioJogo, batch);
     private final int[][] mapa = { //Matriz usada para desenhho do mapa, cada numero representa um tipo de "tile"
             { 1, 0, 0, 0, 0, 0, 0, 1 },
             { 1, 0, 0, 0, 0, 0, 0, 1 },
@@ -54,6 +54,7 @@ public class Cozinha {
     };
 
     //Construtor
+
     public Cozinha() {
         caixas.add(new Ingrediente("Bife", true, 1, new Texture("Bife.png")));
         caixas.add(new Ingrediente("Arroz", true, 2, new Texture("Arroz.png")));
@@ -66,44 +67,140 @@ public class Cozinha {
         caixas.add(new Ingrediente("Alface", false, 9, new Texture("Alface.png")));
         caixas.add(new Ingrediente("Peixe", true, 10, new Texture("Peixe.png")));
         this.mostrarCozinha = false;
+        Cozinha.tempo = 0f;
     }
 
-    //Getter e Setter de MostraCozinha
-    public boolean getMostrarCozinha() {
+    //Getters e Setters
+
+    public boolean isMostrarCozinha() {
         return mostrarCozinha;
     }
     public void setMostrarCozinha(boolean mostrarCozinha) {
         this.mostrarCozinha = mostrarCozinha;
     }
-
-    //Getter e Setter de Tempo
     public static float getTempo() {
         return tempo;
     }
     public static void setTempo(float tempo) {
         Cozinha.tempo = tempo;
     }
-
-    //Getter de AudioJogo
     public AudioJogo getAudioJogo() {
         return audioJogo;
     }
+    public float getDURACAO_PARTIDA() {
+        return DURACAO_PARTIDA;
+    }
+    public Texture getPanela() {
+        return panela;
+    }
+    public Texture getCaixa() {
+        return caixa;
+    }
+    public Texture getChao() {
+        return chao;
+    }
+    public Texture getArmario() {
+        return armario;
+    }
+    public Texture getLixeira() {
+        return lixeira;
+    }
+    public Texture getPrato() {
+        return prato;
+    }
+    public Texture getFogao() {
+        return fogao;
+    }
+    public ArrayList<Ingrediente> getCaixas() {
+        return caixas;
+    }
+    public ArrayList<Ingrediente> getPrato1() {
+        return prato1;
+    }
+    public void setPrato1(ArrayList<Ingrediente> prato1) {
+        this.prato1 = prato1;
+    }
+    public ArrayList<Ingrediente> getPrato2() {
+        return prato2;
+    }
+    public void setPrato2(ArrayList<Ingrediente> prato2) {
+        this.prato2 = prato2;
+    }
+    public Jogador getJogador() {
+        return jogador;
+    }
+    public Restaurante getRestaurante() {
+        return restaurante;
+    }
+    public TodasReceitas getTodasReceitas() {
+        return todasReceitas;
+    }
+    public int getMATRIZ_X() {
+        return MATRIZ_X;
+    }
+    public int getMATRIZ_Y() {
+        return MATRIZ_Y;
+    }
+    public int getDESLOCA_X() {
+        return DESLOCA_X;
+    }
+    public int getDESLOCA_Y() {
+        return DESLOCA_Y;
+    }
+    public float getESCALA2() {
+        return ESCALA2;
+    }
+    public int getESCALA_X() {
+        return ESCALA_X;
+    }
+    public int getESCALA_Y() {
+        return ESCALA_Y;
+    }
+    public int getTEXTO_Y() {
+        return TEXTO_Y;
+    }
+    public int getTAM_IMAGEM_INVENTARIO() {
+        return TAM_IMAGEM_INVENTARIO;
+    }
+    public int getTEXTO_X_PALAVRA1() {
+        return TEXTO_X_PALAVRA1;
+    }
+    public int getIMAGEM_X() {
+        return IMAGEM_X;
+    }
+    public int getTEXTO_X_PALAVRA2() {
+        return TEXTO_X_PALAVRA2;
+    }
+    public int getPONTUACAO_X() {
+        return PONTUACAO_X;
+    }
+    public int getCRONOMETRO_X() {
+        return CRONOMETRO_X;
+    }
+    public int[][] getMapa() {
+        return mapa;
+    }
+
+    //Outros Metodos
 
     //Principal metodo de exibicao e operacao do jogo
-    public void render() {
+    public int render() {
         this.audioJogo.tocarMusica();
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) { //ESC sai do gameplay
             this.mostrarCozinha = false;
             this.audioJogo.pararMusica();
+            return 0;
         }
         //Mostra todas as receitas disponiveis se R for apertado
         if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
             this.todasReceitas.setMostrarReceitas(!this.todasReceitas.isMostrarReceitas());
         }
         this.batch.begin();
+        //Caso mostrar receitas, "pausa" o jogo
         if(this.todasReceitas.isMostrarReceitas()){
             this.todasReceitas.desenhaReceitas();
         }
+        //Casos mostrar telas de jogo
         else {
             ScreenUtils.clear(1f, 1f, 1f, 1f);
             Cozinha.tempo += Gdx.graphics.getDeltaTime();
@@ -115,8 +212,16 @@ public class Cozinha {
                 loopCozinha();
             }
         }
+        //Inventario sempre e desenhado
         desenhaInventario();
         this.batch.end();
+        //Fim da partida por tempo
+        if(Cozinha.tempo > DURACAO_PARTIDA){
+            mostrarCozinha = false;
+            this.audioJogo.pararMusica();
+            return this.jogador.getDinheiro();
+        }
+        return 0;
     }
 
     //Principal metodo de exibicao e operacao de cozinha
@@ -327,6 +432,7 @@ public class Cozinha {
                     //Easter Egg
                     if(cozinhado.getTipoPrato() == 2){
                         this.jogador.setSkin(new Sprite(new Texture("Demonio.png")));
+                        this.restaurante.setINTERVALO_GERACAO(3f);
                     }
                     this.jogador.descartaCarregado();
                     this.jogador.setReceitaCarregada(cozinhado);

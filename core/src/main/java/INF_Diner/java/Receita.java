@@ -3,22 +3,17 @@ package INF_Diner.java;
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
 
-//Classe que representa as receitas, que sao pedidas pelos clientes e produzidas pela panela
+//Classe que representa as receitas, que sao pedidas pelos clientes e produzidas pela panela ou ao pegar um conjunto de ingredientes
 public class Receita {
-    private final String nome;
+    //Atributos
     private int tipoPrato; //Identificador do prato
+    private final String nome;
     private final Texture textura;
     ArrayList<Ingrediente> ingredientes; //Componentes da receita
 
-    //Produz prato especial Mistura - que deve ser colocado na panela e preparado
-    public Receita(ArrayList<Ingrediente> ingredientes) {
-        this.tipoPrato = 0;
-        this.nome = "Mistura";
-        this.textura = new Texture("Mistura.png");
-        this.ingredientes = ingredientes;
-    }
+    //Construtores
 
-    //Gera copia de receita
+    //Gera copia de uma receita
     public Receita(Receita receita){
         this.tipoPrato = receita.tipoPrato;
         this.nome = receita.nome;
@@ -26,7 +21,7 @@ public class Receita {
         this.ingredientes = receita.ingredientes;
     }
 
-    //Produz uma receita de dado tipo de prato
+    //Produz uma receita partindo de um identificador
     public Receita(int tipoPrato) {
         this.tipoPrato = tipoPrato;
         this.nome = nomePorPrato(tipoPrato);
@@ -34,31 +29,36 @@ public class Receita {
         this.textura = new Texture(this.nome + ".png");
     }
 
-    //Getter e Setter de TipoPrato
+    //Produz prato especial Mistura - um conjunto de ingredientes que deve ser colocado na panela e preparado
+    public Receita(ArrayList<Ingrediente> ingredientes) {
+        this.tipoPrato = 0;
+        this.nome = "Mistura";
+        this.textura = new Texture("Mistura.png");
+        this.ingredientes = ingredientes;
+    }
+
+
+    //Getters e Setters
     public int getTipoPrato() {
         return tipoPrato;
     }
     public void setTipoPrato(int tipoPrato) {
         this.tipoPrato = tipoPrato;
     }
-
-    //Getter de Nome
     public String getNome() {
         return nome;
     }
-
-    //Getter de Textura
     public Texture getTextura() {
         return textura;
     }
-
-    //Getter e Setter de Ingredientes
     public ArrayList<Ingrediente> getIngredientes() {
         return ingredientes;
     }
     public void setIngredientes(ArrayList<Ingrediente> ingredientes) {
         this.ingredientes = ingredientes;
     }
+
+    //Outros Metodos
 
     //Matching do tipo de prato com seus ingredientes
     public ArrayList<Ingrediente> ingredientesPorPrato(int prato) {
@@ -130,7 +130,8 @@ public class Receita {
         return ingredientes;
     }
 
-    //Matching do tipo de prato com sua textura
+    //Matching do tipo de prato com seu nome
+    @SuppressWarnings("DuplicateBranchesInSwitch")
     public String nomePorPrato(int prato) {
         switch(prato){
             case 0: return "Mistura";
@@ -151,7 +152,7 @@ public class Receita {
         }
     }
 
-    //Rotina de destrucao
+    //Rotina de encerramento
     public void dispose() {
         this.textura.dispose();
     }
