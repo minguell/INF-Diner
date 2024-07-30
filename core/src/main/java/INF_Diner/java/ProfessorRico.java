@@ -20,6 +20,15 @@ public class ProfessorRico extends Cliente{
         this.deveRepetir = true;
     }
 
+    //Construtor pra teste
+    ProfessorRico(int tileEntrada, boolean teste){
+        super(tileEntrada, teste);
+        Random rand = new Random();
+        this.pagamento = rand.nextInt(MAX_GORJETA);
+        this.setTempoEspera(TEMPO_ESPERA);
+        this.deveRepetir = true;
+    }
+
     //Getters e Setters
     public int getPagamento() {
         return pagamento;

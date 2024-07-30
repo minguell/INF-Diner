@@ -12,10 +12,10 @@ public class Restaurante {
     private boolean mostrarRestaurante; //Inicia a exibicao desta tela
     private boolean forcarSpawn;
     private final SpriteBatch batch;
-    private final Texture chao = new Texture("Chao.png");
-    private final Texture grama = new Texture("Grama.png");
-    private final Texture balcao = new Texture("Armario.png");
-    private final Texture arvore = new Texture("Arvore.png");
+    private final Texture chao;
+    private final Texture grama;
+    private final Texture balcao;
+    private final Texture arvore;
     private final AudioJogo audioJogo;
     private final Jogador jogador;
     private float contador;
@@ -47,7 +47,29 @@ public class Restaurante {
         }
         this.contador = 0f;
         this.forcarSpawn = true;
+        this.arvore = new Texture("Arvore.png");
+        this.balcao = new Texture("Armario.png");
+        this.grama = new Texture("Grama.png");
+        this.chao = new Texture("Chao.png");
     }
+
+    //Construtor pra testes
+    public Restaurante(Jogador jogador){
+        this.jogador = jogador;
+        this.mostrarRestaurante = false;
+        this.audioJogo = null;
+        this.batch = null;
+        for (int i = 0; i < MAX_PROFESSORES; i++) {
+            this.professores.add(null);
+        }
+        this.contador = 0f;
+        this.forcarSpawn = true;
+        this.arvore = null;
+        this.balcao = null;
+        this.grama = null;
+        this.chao = null;
+    }
+
 
     //Getters e Setters
 
@@ -176,7 +198,7 @@ public class Restaurante {
                 }
             }
         }
-        geracaoClientes();
+        geracaoClientes(false);
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             interagirClientes();
         }
@@ -188,7 +210,7 @@ public class Restaurante {
     }
 
     //Gera Clientes, se ainda ha espaco, a cada intervalo de tempo, com tipos baseados na dificuldade
-    public void geracaoClientes(){
+    public void geracaoClientes(boolean teste){
         if(this.contador > INTERVALO_GERACAO || this.forcarSpawn) { //ForcarSpawn serve pra spawnar um cliente imediatamento e testes
             this.forcarSpawn = false;
             this.contador = 0;
@@ -209,14 +231,27 @@ public class Restaurante {
                     //Medio: 3/8 Professor Rico 5/8 Professor
                     //Facil: 8/8 Professor
                     int valor = rand.nextInt(8);
-                    if (Configuracoes.dificuldadeAtual == 2 && valor > 5) {
-                        professores.set(indices.get(x), new Diretor(indices.get(x) + 1));
-                    } else if (valor > 3 && Configuracoes.dificuldadeAtual == 2) {
-                        professores.set(indices.get(x), new ProfessorRico(indices.get(x) + 1));
-                    } else if (valor > 4 && Configuracoes.dificuldadeAtual == 1) {
-                        professores.set(indices.get(x), new ProfessorRico(indices.get(x) + 1));
-                    } else {
-                        professores.set(indices.get(x), new Professor(indices.get(x) + 1));
+                    if(!teste) {
+                        if (Configuracoes.dificuldadeAtual == 2 && valor > 5) {
+                            professores.set(indices.get(x), new Diretor(indices.get(x) + 1));
+                        } else if (valor > 3 && Configuracoes.dificuldadeAtual == 2) {
+                            professores.set(indices.get(x), new ProfessorRico(indices.get(x) + 1));
+                        } else if (valor > 4 && Configuracoes.dificuldadeAtual == 1) {
+                            professores.set(indices.get(x), new ProfessorRico(indices.get(x) + 1));
+                        } else {
+                            professores.set(indices.get(x), new Professor(indices.get(x) + 1));
+                        }
+                    }
+                    else{
+                        if (Configuracoes.dificuldadeAtual == 2 && valor > 5) {
+                            professores.set(indices.get(x), new Diretor(indices.get(x) + 1, teste));
+                        } else if (valor > 3 && Configuracoes.dificuldadeAtual == 2) {
+                            professores.set(indices.get(x), new ProfessorRico(indices.get(x) + 1, teste));
+                        } else if (valor > 4 && Configuracoes.dificuldadeAtual == 1) {
+                            professores.set(indices.get(x), new ProfessorRico(indices.get(x) + 1, teste));
+                        } else {
+                            professores.set(indices.get(x), new Professor(indices.get(x) + 1, teste));
+                        }
                     }
                     x = indices.size(); //Encerra loop
                 }

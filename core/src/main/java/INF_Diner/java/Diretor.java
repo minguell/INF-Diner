@@ -21,6 +21,15 @@ public class Diretor extends Cliente{
         this.banquete = 2;
     }
 
+    //Construtor para testes
+    Diretor(int tileEntrada, boolean teste){
+        super(tileEntrada, teste);
+        Random rand = new Random();
+        this.pagamento = rand.nextInt(MAX_GORJETA);
+        this.setTempoEspera(TEMPO_ESPERA);
+        this.banquete = 2;
+    }
+
     //Getters e Setters
     public int getPagamento() {
         return pagamento;

@@ -14,6 +14,11 @@ public class Professor extends Cliente{
         this.setTempoEspera(TEMPO_ESPERA);
     }
 
+    Professor(int tileEntrada, boolean teste) {
+        super(tileEntrada, teste);
+        this.setTempoEspera(TEMPO_ESPERA);
+    }
+
     //Getters
     public int getTOTAL_PROFESSORES() {
         return TOTAL_PROFESSORES;

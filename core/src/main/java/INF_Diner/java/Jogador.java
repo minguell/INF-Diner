@@ -41,6 +41,19 @@ public class Jogador {
         this.sentidoY = true;
     }
 
+    //Construtor para Teste
+    public Jogador(boolean teste) {
+        this.dinheiro = 0;
+        this.carregando = Carregado.NADA;
+        this.skin = null;
+        this.receitaCarregada = null;
+        this.ingredienteCarregado = null;
+        this.posX = X_INICIAL;
+        this.posY = Y_INICIAL;
+        this.sentidoX = true;
+        this.sentidoY = true;
+    }
+
     //Getters e Setters
     public int getDinheiro() {
         return dinheiro;

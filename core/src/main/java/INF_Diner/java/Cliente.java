@@ -14,7 +14,7 @@ public abstract class Cliente {
     private Texture skin;
     private int posX;
     private int posY;
-    private final Texture balaoDeFala = new Texture("BalaoDeFala.png");
+    private final Texture balaoDeFala;
     private final int TAM_X = 240;
     private final int TAM_Y = 180;
     private final int velocidade = 2;
@@ -30,6 +30,17 @@ public abstract class Cliente {
         this.skin = geraSkin();
         this.posX = TAM_X * tileEntrada;
         this.posY = MIN_Y;
+        this.balaoDeFala = new Texture("BalaoDeFala.png");
+    }
+
+    //Construtor para testes
+    Cliente(int tileEntrada, boolean teste){
+        this.tempoChegada = Cozinha.getTempo();
+        this.pedido = new Receita(4, null);
+        this.skin = null;
+        this.posX = TAM_X * tileEntrada;
+        this.posY = MIN_Y;
+        this.balaoDeFala = null;
     }
 
     //Getters e Setters
@@ -147,7 +158,7 @@ public abstract class Cliente {
     }
 
     //Cliente se retira do restaurante indo pra tras
-    //Retorna um booleano que indica se ele saiu e o encerra
+    //Retorna um booleano que indica se ele e valido: nao e se ele saiu e com isto sera encerrado
     public boolean vaiEmbora(){
         this.parado = false;
         this.posY -= this.velocidade;

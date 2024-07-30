@@ -12,7 +12,6 @@ public class Receita {
     ArrayList<Ingrediente> ingredientes; //Componentes da receita
 
     //Construtores
-
     //Gera copia de uma receita
     public Receita(Receita receita){
         this.tipoPrato = receita.tipoPrato;
@@ -37,6 +36,13 @@ public class Receita {
         this.ingredientes = ingredientes;
     }
 
+    //Construtor especial de testes
+    public Receita(int tipoPrato, Texture textura) {
+        this.ingredientes = null;
+        this.tipoPrato = tipoPrato;
+        this.nome = nomePorPrato(tipoPrato);
+        this.textura = null;
+    }
 
     //Getters e Setters
     public int getTipoPrato() {
