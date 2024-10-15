@@ -4,8 +4,13 @@ Armario.png
 Arroz.png
 Arvore.png
 AumentarVolume.png
+<<<<<<< HEAD
+Balcao.png
+balcao.webp
+=======
 BalaoDeFala.png
 Batida De Proteina.png
+>>>>>>> origin/main
 Bife.png
 BotaoExit.png
 BotaoPlay.png
@@ -29,7 +34,10 @@ Feijao.png
 Fogao.png
 Gororoba.png
 Grama.png
+<<<<<<< HEAD
+=======
 Hamburguer.png
+>>>>>>> origin/main
 InteragirIngredientes.mp3
 Jogador.png
 Lixeira.png
@@ -40,6 +48,7 @@ Macarrao.png
 Marmita Simples.png
 Medio.png
 MenuPrincipal.png
+Mesa.png
 Mistura.png
 ModoDaTela.png
 MudarBotao.mp3
