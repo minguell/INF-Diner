@@ -25,7 +25,7 @@ class ProfessorTest {
 
 
     @Test
-    void satisfeito() { //Deve ser sempre verdade
+    void satisfeito() { //Sempre verdade
         assertTrue(professor.satisfeito(), "Professor nao tem pedido");
     }
 }
