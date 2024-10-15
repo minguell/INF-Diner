@@ -4,29 +4,53 @@ import com.badlogic.gdx.graphics.Texture;
 import java.util.Random;
 
 public class Professor extends Cliente{
-    private final int TOTAL_PROFESSORES = 1; //Numero de skins de professor disponiveis
-    private final int TEMPO_ESPERA = 30;
+    //Atributos
+    private final int TOTAL_PROFESSORES = 6; //Numero de skins de professor disponiveis
+    private final float TEMPO_ESPERA = 35f;
 
-    Professor(double tempoDeJogo) {
-        super(tempoDeJogo);
+    //Construtor
+    Professor(int tileEntrada) {
+        super(tileEntrada);
         this.setTempoEspera(TEMPO_ESPERA);
     }
 
-    //AINDA FALTA IMPLEMENTAR A CONSIDERACAO DO TEMPO DE JOGO
+    Professor(int tileEntrada, boolean teste) {
+        super(tileEntrada, teste);
+        this.setTempoEspera(TEMPO_ESPERA);
+    }
+
+    //Getters
+    public int getTOTAL_PROFESSORES() {
+        return TOTAL_PROFESSORES;
+    }
+    public float getTEMPO_ESPERA() {
+        return TEMPO_ESPERA;
+    }
+
+    //Outros Metodos
+
+    //O professor paga o dobro da quantidade de ingredientes como valor
     @Override
-    public int pagaPedido(double tempoDeJogo){
+    public int pagaPedido(){
+        super.setPagou(true);
         return (this.getPedido().ingredientes.size() * 2);
     }
 
-    //IMPLEMENTAR
+    //Nao existe para professor, ja que so tem um pedido fixo
     @Override
-    public void fazPedido(){
+    public void atualizaPedido(){
+    }
+
+    //Indica que o jogador ja esta contente apos o primeiro pedido
+    @Override
+    public boolean satisfeito(){
+        return true;
     }
 
     //Gera aleatoriamente uma skin para o professor dentre as disponiveis
     @Override
     public Texture geraSkin(){
         Random rand = new Random();
-        return new Texture("professor" + rand.nextInt(TOTAL_PROFESSORES));
+        return new Texture("Professor" + rand.nextInt(TOTAL_PROFESSORES) + ".png");
     }
 }

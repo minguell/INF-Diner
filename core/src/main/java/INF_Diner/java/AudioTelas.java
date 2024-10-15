@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 
 //Classe que lida com toda parte sonora das telas de opcoes, tanto musica quanto efeitos sonoros
 public class AudioTelas {
+    //Atributos
     private final Music musica;
     private final Sound mudarBotao;
     private final Sound selecao;
@@ -22,7 +23,7 @@ public class AudioTelas {
         this.volume = 1.0f;
     }
 
-    //Getter e setter de volume
+    //Getters e Setters
     public float getVolume() {
         return volume;
     }
@@ -30,14 +31,20 @@ public class AudioTelas {
         this.volume = volume;
         this.musica.setVolume(volume);
     }
-
-    //Rotina de encerramento da parte sonora
-    public void dispose(){
-        this.musica.dispose();
-        this.mudarBotao.dispose();
-        this.selecao.dispose();
-        this.erro.dispose();
+    public Music getMusica() {
+        return musica;
     }
+    public Sound getMudarBotao() {
+        return mudarBotao;
+    }
+    public Sound getSelecao() {
+        return selecao;
+    }
+    public Sound getErro() {
+        return erro;
+    }
+
+    //Outros Metodos
 
     //Toca a musica indefinidamente
     public void tocarMusica(){
@@ -61,5 +68,13 @@ public class AudioTelas {
     //Efeito sonoro a ser usado quando qualquer tipo de comportamento invalido for tentado
     public void efeitoErro(){
         this.erro.play(this.volume);
+    }
+
+    //Rotina de encerramento da parte sonora
+    public void dispose(){
+        this.musica.dispose();
+        this.mudarBotao.dispose();
+        this.selecao.dispose();
+        this.erro.dispose();
     }
 }

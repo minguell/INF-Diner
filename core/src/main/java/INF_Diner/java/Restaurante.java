@@ -3,90 +3,152 @@ package INF_Diner.java;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.utils.ScreenUtils;
-import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import java.util.*;
 
-//Classe central do fluxo do jogo em si e exibe a cozinha, com suas funcionalidades
+//Classe da tela do restaurante, controla a geracao dos clientes e com suas funcionalidades
 public class Restaurante {
+    //Atributos
     private boolean mostrarRestaurante; //Inicia a exibicao desta tela
-    private final SpriteBatch batch = new SpriteBatch();
-    private final Texture mesa = new Texture("Balcao.png");
-    private final Texture chao = new Texture("Chao.png");
-    private final Texture grama = new Texture("Grama.png");
-    private final Texture balcao = new Texture("Armario.png");
-    private final Texture prato = new Texture("Prato.png");
-    private final  ArrayList<Ingrediente> caixas = new ArrayList<>();
-    private  ArrayList<Ingrediente> prato1 = new ArrayList<>();
-    private  ArrayList<Ingrediente> prato2 = new ArrayList<>();
-    private final Jogador jogador = new Jogador();
-    private final AudioJogo audioJogo = new AudioJogo();
+    private boolean forcarSpawn;
+    private final SpriteBatch batch;
+    private final Texture chao;
+    private final Texture grama;
+    private final Texture balcao;
+    private final Texture arvore;
+    private final AudioJogo audioJogo;
+    private final Jogador jogador;
+    private float contador;
+    private float INTERVALO_GERACAO = 30f;
+    private final int MAX_PROFESSORES = 6;
     private final int MATRIZ_X = 8;
     private final int MATRIZ_Y = 6;
-    private final int ESCALA_X = 1920 / MATRIZ_X;
-    private final int ESCALA_Y = 1080 / MATRIZ_Y;
-    private final int TEXTO_Y = 50; //Altura do texto do inventario
-    private final int TAM_IMAGEM_INVENTARIO = 50; //Altura da imagem do inventario
-    private final int TEXTO_X_PALAVRA1 = 0; //X da primeira palavra do inventario
-    private final int IMAGEM_X = TEXTO_X_PALAVRA1 + 260; //X da imagem do inventario
-    private final int TEXTO_X_PALAVRA2 = IMAGEM_X + TAM_IMAGEM_INVENTARIO; //X da segunda palavra do inventario
+    private final int ESCALA_X = INF_Diner.TELA_X / MATRIZ_X;
+    private final int ESCALA_Y = INF_Diner.TELA_Y / MATRIZ_Y;
+    List<Cliente> professores = new ArrayList<>();
     private final int[][] mapa = { //Matriz usada para desenhho do mapa, cada numero representa um tipo de "tile"
-            {4, 4, 4, 4, 4, 4, 4, 4},
-            {5, 0, 0, 0, 0, 0, 0, 5},
-            {5, 0, 0, 0, 0, 0, 0, 5},
-            {5, 5, 5, 5, 5, 5, 5, 5},
-            {5, 0, 0, 0, 0, 0, 0, 5},
-            {5, 0, 0, 0, 0, 0, 0, 5}
+        {3, 2, 2, 2, 2, 2, 2, 3},
+        {1, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 0, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 0, 1}
     };
 
     //Construtor
-    public Restaurante() {
-        caixas.add(new Ingrediente("Bife", true, 1, new Texture("Bife.png")));
-        caixas.add(new Ingrediente("Arroz", true, 2, new Texture("Arroz.png")));
-        caixas.add(new Ingrediente("Feijao", true, 3, new Texture("Feijao.png")));
-        caixas.add(new Ingrediente("Macarrao", true, 4, new Texture("Macarrao.png")));
-        caixas.add(new Ingrediente("Pao", false, 5, new Texture("Pao.png")));
-        caixas.add(new Ingrediente("Peixe", false, 6, new Texture("Peixe.png")));
-        caixas.add(new Ingrediente("Ovo", false, 6, new Texture("Ovo.png")));
-        caixas.add(new Ingrediente("Tomate", false, 6, new Texture("Tomate.png")));
-        this.mostrarRestaurante = false;
- }
 
-    //Getter e Setter de MostraRestaurante
-    public boolean getMostrarRestaurante() {
-        return mostrarRestaurante;
+    public Restaurante(Jogador jogador, AudioJogo audioJogo, SpriteBatch batch) {
+        this.jogador = jogador;
+        this.mostrarRestaurante = false;
+        this.audioJogo = audioJogo;
+        this.batch = batch;
+        for (int i = 0; i < MAX_PROFESSORES; i++) {
+            this.professores.add(null);
+        }
+        this.contador = 0f;
+        this.forcarSpawn = true;
+        this.arvore = new Texture("Arvore.png");
+        this.balcao = new Texture("Armario.png");
+        this.grama = new Texture("Grama.png");
+        this.chao = new Texture("Chao.png");
+    }
+
+    //Construtor pra testes
+    public Restaurante(Jogador jogador){
+        this.jogador = jogador;
+        this.mostrarRestaurante = false;
+        this.audioJogo = null;
+        this.batch = null;
+        for (int i = 0; i < MAX_PROFESSORES; i++) {
+            this.professores.add(null);
+        }
+        this.contador = 0f;
+        this.forcarSpawn = true;
+        this.arvore = null;
+        this.balcao = null;
+        this.grama = null;
+        this.chao = null;
+    }
+
+
+    //Getters e Setters
+
+    public boolean isForcarSpawn() {
+        return forcarSpawn;
+    }
+    public void setForcarSpawn(boolean forcarSpawn) {
+        this.forcarSpawn = forcarSpawn;
     }
     public void setMostrarRestaurante(boolean mostrarRestaurante) {
         this.mostrarRestaurante = mostrarRestaurante;
     }
-
-    //Getter de AudioJogo
     public AudioJogo getAudioJogo() {
         return audioJogo;
     }
-
-    //Principal metodo de exibicao e operacao de cozinha
-    public void render(int dificuldade) {
-        this.audioJogo.tocarMusica();
-        tratadorDeEntradas();
-        verificarTransicaoCozinha();
-        ScreenUtils.clear(1f, 1f, 1f, 1f);
-        this.batch.begin();
-        desenhaRestaurante();
-        desenhaInventario();
-        this.jogador.render(batch);
-        this.batch.end();
+    public float getINTERVALO_GERACAO() {
+        return INTERVALO_GERACAO;
+    }
+    public void setINTERVALO_GERACAO(float INTERVALO_GERACAO) {
+        this.INTERVALO_GERACAO = INTERVALO_GERACAO;
+    }
+    public boolean getMostrarRestaurante() {
+        return mostrarRestaurante;
+    }
+    public Texture getChao() {
+        return chao;
+    }
+    public Texture getGrama() {
+        return grama;
+    }
+    public Texture getBalcao() {
+        return balcao;
+    }
+    public Texture getArvore() {
+        return arvore;
+    }
+    public Jogador getJogador() {
+        return jogador;
+    }
+    public float getContador() {
+        return contador;
+    }
+    public void setContador(float contador) {
+        this.contador = contador;
+    }
+    public int getMAX_PROFESSORES() {
+        return MAX_PROFESSORES;
+    }
+    public int getMATRIZ_X() {
+        return MATRIZ_X;
+    }
+    public int getMATRIZ_Y() {
+        return MATRIZ_Y;
+    }
+    public int getESCALA_X() {
+        return ESCALA_X;
+    }
+    public int getESCALA_Y() {
+        return ESCALA_Y;
+    }
+    public List<Cliente> getProfessores() {
+        return professores;
+    }
+    public void setProfessores(List<Cliente> professores) {
+        this.professores = professores;
+    }
+    public int[][] getMapa() {
+        return mapa;
     }
 
-    private void verificarTransicaoCozinha() {
-        if (jogador.getPosY() > 1300) {
-            // Transição para a tela ou estado da cozinha
-            setMostrarRestaurante(false);
-            // Aqui você poderia chamar um método para mudar a tela ou o estado do jogo
-            // como um método `mudarParaCozinha()` que você teria que implementar
-           // Cozinha.setmostrarCozinha(false);
-        }
+    //Outros Metodos
+
+    //Principal metodo de exibicao e operacao do restaurante
+    public void render() {
+        desenhaRestaurante();
+        this.jogador.movimentar();
+        this.jogador.render(batch);
+        atualizaProfessores();
+        this.mostrarRestaurante = !this.jogador.saiuRestaurante();
     }
 
     //Desenha na tela toda a cozinha
@@ -95,139 +157,146 @@ public class Restaurante {
         int ingredienteIndex = 0;
         //Percorre toda a matriz e desenha cada espaco
         for (int i = 0; i < MATRIZ_Y; i++) {
-            for (int j = 0; j < MATRIZ_X; j++) { 
+            for (int j = 0; j < MATRIZ_X; j++) {
                 //DESENHA O CHAO
-                this.batch.draw(chao, j * ESCALA_X, i * ESCALA_Y, ESCALA_X, ESCALA_Y);
                 switch(mapa[i][j]){
-                    //CASO mesa COM INGREDIENTES
+                    //CASO BALCAO
                     case 1:
+                        this.batch.draw(chao, j * ESCALA_X, i * ESCALA_Y, ESCALA_X, ESCALA_Y);
                         this.batch.draw(balcao, j * ESCALA_X, i * ESCALA_Y, ESCALA_X, ESCALA_Y);
-                        this.batch.draw(mesa, j * ESCALA_X, i * ESCALA_Y, ESCALA_X, ESCALA_Y);
-                        this.batch.draw(caixas.get(ingredienteIndex).getTextura(), j * ESCALA_X, i * ESCALA_Y, ESCALA_X, ESCALA_Y);
-                        ingredienteIndex++;
                         break;
-                    //CASO PANELA
+                    //CASO GRAMA
                     case 2:
-                        this.batch.draw(balcao, j * ESCALA_X, i * ESCALA_Y, ESCALA_X, ESCALA_Y);
-                        break;
-                    //CASO PRATO
-                    case 3:
-                        this.batch.draw(balcao, j * ESCALA_X, i * ESCALA_Y, ESCALA_X, ESCALA_Y);
-                        this.batch.draw(prato, j * ESCALA_X, i * ESCALA_Y, ESCALA_X, ESCALA_Y);
-                        //Desenha o conteudo de cada prato
-                        if(pratoIndex == 0){
-                            pratoIndex++;
-                            for (Ingrediente ingrediente : prato1) {
-                                this.batch.draw(ingrediente.getTextura(), j * ESCALA_X, i * ESCALA_Y, ESCALA_X, ESCALA_Y);
-                            }
-                        }
-                        else if (pratoIndex == 1){
-                            pratoIndex++;
-                            for (Ingrediente ingrediente : prato2) {
-                                this.batch.draw(ingrediente.getTextura(), j * ESCALA_X, i * ESCALA_Y, ESCALA_X, ESCALA_Y);
-                            }
-                        }
-                        break;
-                    //CASO LIXEIRA
-                    case 4:
-                        this.batch.draw(balcao, j * ESCALA_X, i * ESCALA_Y, ESCALA_X, ESCALA_Y);
                         this.batch.draw(grama, j * ESCALA_X, i * ESCALA_Y, ESCALA_X, ESCALA_Y);
                         break;
-                    //CASO mesa SEM INGREDIENTES
-                    case 5:
-                        this.batch.draw(balcao, j * ESCALA_X, i * ESCALA_Y, ESCALA_X, ESCALA_Y);
+                    //CASO ARVORE
+                    case 3:
+                        this.batch.draw(grama, j * ESCALA_X, i * ESCALA_Y, ESCALA_X, ESCALA_Y);
+                        this.batch.draw(arvore, j * ESCALA_X, i * ESCALA_Y, ESCALA_X, ESCALA_Y);
                         break;
+                    //CASO CHAO
                     default:
+                        this.batch.draw(chao, j * ESCALA_X, i * ESCALA_Y, ESCALA_X, ESCALA_Y);
                         break;
                 }
             }
         }
     }
 
-    //Desenha as informacoes do inventario na tela
-    public void desenhaInventario(){
-        BitmapFont font = new BitmapFont();
-        font.getData().setScale(4);
-        font.draw(this.batch, "Inventario:", TEXTO_X_PALAVRA1, TEXTO_Y);
-        if(this.jogador.getCaregando() == Jogador.Carregado.INGREDIENTE){
-            this.batch.draw(this.jogador.getIngredienteCarregado().getTextura(),  IMAGEM_X, 0, TAM_IMAGEM_INVENTARIO, TAM_IMAGEM_INVENTARIO);
-            font.draw(this.batch, this.jogador.getIngredienteCarregado().getNome(), TEXTO_X_PALAVRA2, TEXTO_Y);
-        }
-        else if(this.jogador.getCaregando() == Jogador.Carregado.RECEITA){
-            this.batch.draw(this.jogador.getReceitaCarregada().getTextura(),  IMAGEM_X, 0, TAM_IMAGEM_INVENTARIO, TAM_IMAGEM_INVENTARIO);
-            font.draw(this.batch, this.jogador.getReceitaCarregada().getNome(), TEXTO_X_PALAVRA2, TEXTO_Y);
-        }
-    }
-
-    //Trata as entradas do jogador
-   public void tratadorDeEntradas(){
-        this.jogador.movimentar();
-         interacaoUtensilios();
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            this.mostrarRestaurante= false;
-            this.audioJogo.pararMusica();
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
-            this.audioJogo.pararMusica();
-        }
-    }
-
-    //Trata as entradas do jogador referentes aos utensilios da cozinha
-    public void interacaoUtensilios(){
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-            if (verificarProximidadeCliente()){
-               // Professor.professor.fazPedido();
+    //Vai atualizando professores, mesmo quando jogador nao estiver na tela
+    public void atualizaProfessores(){
+        boolean valido;
+        contaTempo();
+        for(int i = 0; i < MAX_PROFESSORES; i++){
+            if(professores.get(i) != null){
+                if(mostrarRestaurante){ //Desenha cada professor
+                    batch.draw(professores.get(i).getSkin(), professores.get(i).getPosX(), professores.get(i).getPosY());
+                }
+                valido = professores.get(i).atualiza(batch); //Verifica se o professor ainda e valido apos o atualizar
+                if(!valido){ //Limpa invalidos
+                    professores.set(i, null);
+                }
             }
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
-            interacaoEntregarPratos();
+        geracaoClientes(false);
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            interagirClientes();
         }
     }
 
-  //Permite o jogador pegar o conteudo de um prato, gerando uma mistura e limpando o prato
-    public void interacaoEntregarPratos(){
-        if (verificarProximidadeCliente()) {
-            entregarItemAoCliente();
-        } 
+    //Conta tempo para os ciclos de geracao
+    public void contaTempo(){
+        this.contador += Gdx.graphics.getDeltaTime();
     }
 
-    public boolean verificarProximidadeCliente() {
-        int posYJogador = this.jogador.getPosY();
-        int posXJogador = this.jogador.getPosX();
-        // Supondo que a matriz mapa tem a informação dos clientes
-        // e que o valor 7 representa um cliente
-        if (mapa[posYJogador][posXJogador] == 7) {
-            return true;
+    //Gera Clientes, se ainda ha espaco, a cada intervalo de tempo, com tipos baseados na dificuldade
+    public void geracaoClientes(boolean teste){
+        if(this.contador > INTERVALO_GERACAO || this.forcarSpawn) { //ForcarSpawn serve pra spawnar um cliente imediatamento e testes
+            this.forcarSpawn = false;
+            this.contador = 0;
+            //Randomizacao do spanw
+            ArrayList<Integer> indices = new ArrayList<>();
+            for (int x = 0; x < MAX_PROFESSORES; x++) {
+                indices.add(x); //Cria uma lista de indices
+            }
+            Collections.shuffle(indices); //Ordena em ordem aleatoria
+            for (int x = 0; x < indices.size(); x++) {
+                if (professores.get(indices.get(x)) == null) { //Procura o primeiro indice baseado nessa ordem vazio
+                    if(mostrarRestaurante){
+                        this.audioJogo.efeitoOi();
+                    }
+                    Random rand = new Random();
+                    //Regras de chances de spawn baseadas em dificuldade
+                    //Brutal: 2/8 Diretor 3/8 Professor Rico 3/8 Professor
+                    //Medio: 3/8 Professor Rico 5/8 Professor
+                    //Facil: 8/8 Professor
+                    int valor = rand.nextInt(8);
+                    if(!teste) {
+                        if (Configuracoes.dificuldadeAtual == 2 && valor > 5) {
+                            professores.set(indices.get(x), new Diretor(indices.get(x) + 1));
+                        } else if (valor > 3 && Configuracoes.dificuldadeAtual == 2) {
+                            professores.set(indices.get(x), new ProfessorRico(indices.get(x) + 1));
+                        } else if (valor > 4 && Configuracoes.dificuldadeAtual == 1) {
+                            professores.set(indices.get(x), new ProfessorRico(indices.get(x) + 1));
+                        } else {
+                            professores.set(indices.get(x), new Professor(indices.get(x) + 1));
+                        }
+                    }
+                    else{
+                        if (Configuracoes.dificuldadeAtual == 2 && valor > 5) {
+                            professores.set(indices.get(x), new Diretor(indices.get(x) + 1, teste));
+                        } else if (valor > 3 && Configuracoes.dificuldadeAtual == 2) {
+                            professores.set(indices.get(x), new ProfessorRico(indices.get(x) + 1, teste));
+                        } else if (valor > 4 && Configuracoes.dificuldadeAtual == 1) {
+                            professores.set(indices.get(x), new ProfessorRico(indices.get(x) + 1, teste));
+                        } else {
+                            professores.set(indices.get(x), new Professor(indices.get(x) + 1, teste));
+                        }
+                    }
+                    x = indices.size(); //Encerra loop
+                }
+            }
         }
-        return false;
     }
 
-    public void entregarItemAoCliente() {
-        if (this.jogador.getCaregando() != Jogador.Carregado.NADA) {
-            System.out.println("Item entregue ao cliente!");
-          //  this.jogador.setCarregado(Jogador.Carregado.NADA);
+    //Permite a interacao do usuario com os clientes, a entrega ou recusa da receita e a atualizacao dos clientes com isto
+    public void interagirClientes(){
+        if(this.jogador.getPosY() == this.jogador.getMIN_Y()){
+            //Calcula o indice do cliente com quem o jogador interage
+            int indiceProfessor = (int)Math.floor((this.jogador.getPosX() - ((double) ESCALA_X / 2)) / ESCALA_X);
+            //Se o professor existir e for valido para interacao
+            if(this.professores.get(indiceProfessor) != null && this.professores.get(indiceProfessor).isParado()){
+                //Se jogador cumpriu o pedido
+                if(this.jogador.getCaregando() == Jogador.Carregado.RECEITA &&
+                    jogador.getReceitaCarregada().getTipoPrato() == this.professores.get(indiceProfessor).getPedido().getTipoPrato()){
+                    //Entrega pedido
+                    this.jogador.descartaCarregado();
+                    if(this.professores.get(indiceProfessor).satisfeito()){ //Se ele satisfaz cliente vai embora
+                        this.audioJogo.efeitoTchau();
+                        this.jogador.recebeDinheiro(this.professores.get(indiceProfessor).pagaPedido());
+                    }
+                    else{ //Se nao satisfaz atualiza com o proximo
+                        this.audioJogo.efeitoValeu();
+                        this.professores.get(indiceProfessor).atualizaPedido();
+                    }
+                }
+                else{ //Recusa se o jogador nao corresponder o desejo
+                    this.audioJogo.efeitoNao();
+                }
+            }
         }
     }
 
     //Rotina de encerramento
     public void dispose(){
-        this.batch.dispose();
         this.balcao.dispose();
-        this.mesa.dispose();
         this.chao.dispose();
         this.grama.dispose();
-        this.prato.dispose();
-        this.audioJogo.dispose();
-        for (Ingrediente value : caixas) {
-            value.dispose();
-        }
-        for (Ingrediente ingrediente : prato1) {
-            ingrediente.dispose();
-        }
-        for (Ingrediente ingrediente : prato2) {
-            ingrediente.dispose();
+        this.arvore.dispose();
+        for(Cliente professor: professores){
+            if(professor != null){
+                professor.dispose();
+            }
         }
     }
 }
-
-

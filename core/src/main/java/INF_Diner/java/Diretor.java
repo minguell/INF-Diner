@@ -1,67 +1,85 @@
 package INF_Diner.java;
 
 import com.badlogic.gdx.graphics.Texture;
-
-import java.util.ArrayList;
 import java.util.Random;
 
+//Tipo especial de cliente caracterizado por ser mais raro, pagar gorjetas generosas, pedir 3 pratos e esperar por mais tempo
 public class Diretor extends Cliente{
-    private int gorjeta;
-    private ArrayList<Receita> banquete;
-    private final int TOTAL_DIRETORES = 1;
+    //Atributos
+    private int pagamento;
+    private int banquete;
+    private final int TOTAL_DIRETORES = 2; //Numero de skins de Diretor disponiveis
     private final int MAX_GORJETA = 20;
-    private final int TEMPO_ESPERA = 65;
+    private final float TEMPO_ESPERA = 70f;
 
-    Diretor(double tempoDeJogo){
-        super(tempoDeJogo);
+    //Construtor
+    Diretor(int tileEntrada){
+        super(tileEntrada);
         Random rand = new Random();
-        this.gorjeta = rand.nextInt(MAX_GORJETA);
-        this.banquete = new ArrayList<>();
-        this.banquete.add(randomizaPedido());
-        this.banquete.add(randomizaPedido());
+        this.pagamento = rand.nextInt(MAX_GORJETA);
         this.setTempoEspera(TEMPO_ESPERA);
+        this.banquete = 2;
     }
 
-    //Getter e Setter de Gorjeta
-    public int getGorjeta() {
-        return gorjeta;
-    }
-    public void setGorjeta(int gorjeta) {
-        this.gorjeta = gorjeta;
+    //Construtor para testes
+    Diretor(int tileEntrada, boolean teste){
+        super(tileEntrada, teste);
+        Random rand = new Random();
+        this.pagamento = rand.nextInt(MAX_GORJETA);
+        this.setTempoEspera(TEMPO_ESPERA);
+        this.banquete = 2;
     }
 
-    //Getter e setter de Banquete
-    public ArrayList<Receita> getBanquete() {
+    //Getters e Setters
+    public int getPagamento() {
+        return pagamento;
+    }
+    public void setPagamento(int pagamento) {
+        this.pagamento = pagamento;
+    }
+    public int getTOTAL_DIRETORES() {
+        return TOTAL_DIRETORES;
+    }
+    public int getMAX_GORJETA() {
+        return MAX_GORJETA;
+    }
+    public float getTEMPO_ESPERA() {
+        return TEMPO_ESPERA;
+    }
+    public int getBanquete() {
         return banquete;
     }
-    public void setBanquete(ArrayList<Receita> banquete) {
+    public void setBanquete(int banquete) {
         this.banquete = banquete;
     }
 
+    //Outros Metodos
 
-    //AINDA FALTA IMPLEMENTAR A CONSIDERACAO DO TEMPO DE JOGO
+    //O pagamento equivale ao dobro do numero de ingredientes dos 3 pedidos mais uma gorjeta
     @Override
-    public int pagaPedido(double tempoDeJogo){
-        return (this.getPedido().ingredientes.size() * 2) + (this.banquete.get(0).ingredientes.size() * 2) + (this.banquete.get(0).ingredientes.size() * 2) + this.gorjeta;
+    public int pagaPedido(){
+        super.setPagou(true);
+        return pagamento + this.getPedido().ingredientes.size() * 2;
     }
 
-    //IMPLEMENTAR
+    //Atualiza o pedido do Diretor com o proximo do seu total (3)
     @Override
-    public void fazPedido(){
+    public void atualizaPedido(){
+        this.banquete--;
+        this.pagamento += this.getPedido().ingredientes.size() * 2;
+        this.setPedido(randomizaPedido());
     }
 
-    //Gera aleatoriamente uma skin para o professor rico dentre as disponiveis
+    //Indica que o Diretor esta satisfeito se o contador de pedidos for 0
+    @Override
+    public boolean satisfeito(){
+        return banquete == 0;
+    }
+
+    //Gera aleatoriamente uma skin para o diretor dentre as disponiveis
     @Override
     public Texture geraSkin(){
         Random rand = new Random();
-        return new Texture("diretor" + rand.nextInt(TOTAL_DIRETORES));
-    }
-
-    //Rotina de destrucao
-    @Override
-    public void dispose() {
-        super.dispose();
-        this.banquete.get(0).dispose();
-        this.banquete.get(1).dispose();
+        return new Texture("Diretor" + rand.nextInt(TOTAL_DIRETORES) + ".png");
     }
 }

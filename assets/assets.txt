@@ -1,9 +1,16 @@
+A La Minuta.png
 Alface.png
 Armario.png
 Arroz.png
+Arvore.png
 AumentarVolume.png
+<<<<<<< HEAD
 Balcao.png
 balcao.webp
+=======
+BalaoDeFala.png
+Batida De Proteina.png
+>>>>>>> origin/main
 Bife.png
 BotaoExit.png
 BotaoPlay.png
@@ -13,19 +20,32 @@ Caixa.png
 Chao.png
 Cinzas.png
 Configuracoes.png
+Controles.png
 Cozinhar.mp3
+Demonio.png
 Descartar.mp3
 DiminuirVolume.png
+Diretor0.png
+Diretor1.png
+DiretorTemplate.png
 ErroMenu.mp3
 Facil.png
 Feijao.png
 Fogao.png
 Gororoba.png
 Grama.png
+<<<<<<< HEAD
+=======
+Hamburguer.png
+>>>>>>> origin/main
 InteragirIngredientes.mp3
 Jogador.png
 Lixeira.png
+Macarrao Bolonhesa.png
+Macarrao Com Peixe.png
+Macarrao Com Queijo.png
 Macarrao.png
+Marmita Simples.png
 Medio.png
 MenuPrincipal.png
 Mesa.png
@@ -34,14 +54,35 @@ ModoDaTela.png
 MudarBotao.mp3
 MusicaJogo.mp3
 MusicaMenu.mp3
+Nao.mp3
+Oi.mp3
 Ovo.png
 Panela.png
+Pao Com Ovo.png
 Pao.png
 Peixe.png
-placeholder.png
+Pizza Demoniaca.png
+Pizza.png
 Prato.png
+Professor0.png
+Professor1.png
+Professor2.png
+Professor3.png
+Professor4.png
+Professor5.png
+ProfessorRico0.png
+ProfessorRico1.png
+ProfessorRico2.png
+ProfessorRico3.png
+ProfessorRicoTemplate.png
+ProfessorTemplate.png
 Queijo.png
+Receitas.png
+Salada.png
+Sanduiche De Peixe.png
 SelecaoMenu.mp3
 SetaOpcaoAtual.png
+Tchau.mp3
 Tomate.png
+Valeu.mp3
 Voltar.png
